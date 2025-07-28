@@ -16,5 +16,5 @@ For complete documentation, refer to the [/docs](https://github.com/darianmorat/
 
 ## License
 
-Proprietary software. All rights reserved
+Proprietary software. All rights reserved  
 © 2025 Ticsor App
