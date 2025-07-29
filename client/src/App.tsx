@@ -1,17 +1,55 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { Login } from "./pages/Login";
 import { Learn } from "./pages/Learn";
 import { Default } from "./layouts/Default";
+import { useAuthStore } from "./stores/useAuthStore";
+import { useEffect, useLayoutEffect, type ReactNode } from "react";
+import { Bounce, ToastContainer } from "react-toastify";
+import { LoadingSpinner } from "./components/ui/LoadingSpinner";
+import { PrivateRoute } from "./components/auth/privateRoute";
 
 function App() {
+   const { isAuth, checkingAuth, checkAuth } = useAuthStore();
+
+   useEffect(() => {
+      checkAuth();
+   }, [checkAuth]);
+
+   if (checkingAuth) {
+      return <LoadingSpinner />;
+   }
+
+   const Wrapper = ({ children }: { children: ReactNode }) => {
+      const location = useLocation();
+
+      useLayoutEffect(() => {
+         window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      }, [location.pathname]);
+
+      return children;
+   };
+
    return (
       <>
-         <Routes>
-            <Route element={<Default />}>
-               <Route path="/" element={<Login />} />
-               <Route path="/learn" element={<Learn />} />
-            </Route>
-         </Routes>
+         <Wrapper>
+            <Routes>
+               <Route path="/" element={isAuth ? <Navigate to="/learn" /> : <Login />} />
+               <Route element={<PrivateRoute />}>
+                  <Route element={<Default />}>
+                     <Route path="/learn" element={<Learn />} />
+                  </Route>
+               </Route>
+            </Routes>
+         </Wrapper>
+
+         <ToastContainer
+            className="mb-[-15px]"
+            theme="colored"
+            autoClose={4500}
+            position="bottom-right"
+            transition={Bounce}
+            pauseOnHover={false}
+         />
       </>
    );
 }
