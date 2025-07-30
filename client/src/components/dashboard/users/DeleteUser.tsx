@@ -8,8 +8,6 @@ type DeleteUserProps = {
    user: User;
 };
 
-// PENDING:
-// THIS IS BEING REPEATED, MAKE A GLOBAL TYPE
 type User = {
    id: string;
    name: string;

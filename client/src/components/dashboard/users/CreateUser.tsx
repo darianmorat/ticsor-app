@@ -16,10 +16,6 @@ import { useState } from "react";
 import { useUserStore } from "@/stores/useUserStore";
 import { Modal } from "@/components/ui/Modal";
 
-// PENDING:
-// WE SHOULD NOT CLOSE THE MODAL WHEN THE USERNAME OR EMAIL IS ALREADY IN USE, WE
-// SHOULD INSTEAD JUST SHOW THE NOTIFICATION AND KEEP IT OPEN
-
 type CreateUserProps = {
    handleModal: (modal: string) => void;
 };
