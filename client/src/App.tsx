@@ -6,7 +6,11 @@ import { useAuthStore } from "./stores/useAuthStore";
 import { useEffect, useLayoutEffect, type ReactNode } from "react";
 import { Bounce, ToastContainer } from "react-toastify";
 import { LoadingSpinner } from "./components/ui/LoadingSpinner";
-import { PrivateRoute } from "./components/auth/privateRoute";
+import { PrivateRoute } from "./components/auth/PrivateRoute";
+import { Dashboard } from "./pages/Dashboard";
+import { Profile } from "./pages/Profile";
+import { NotFound } from "./pages/NotFound";
+import { SecureRoute } from "./components/auth/SecureRoute";
 
 function App() {
    const { isAuth, checkingAuth, checkAuth } = useAuthStore();
@@ -34,9 +38,18 @@ function App() {
          <Wrapper>
             <Routes>
                <Route path="/" element={isAuth ? <Navigate to="/learn" /> : <Login />} />
+               <Route path="/404" element={<NotFound />} />
+
                <Route element={<PrivateRoute />}>
                   <Route element={<Default />}>
                      <Route path="/learn" element={<Learn />} />
+                     <Route path="/:username" element={<Profile />} />
+                  </Route>
+               </Route>
+
+               <Route element={<SecureRoute />}>
+                  <Route element={<Default />}>
+                     <Route path="/dashboard" element={<Dashboard />} />
                   </Route>
                </Route>
             </Routes>

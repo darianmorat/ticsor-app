@@ -3,6 +3,7 @@ import { userService } from "../services/user.service";
 import { jwtGenerator } from "../utils/jwtGenerator";
 import { clearCookie, setCookie } from "../utils/setCookie";
 import { AuthRequest } from "../types/auth";
+import { compare } from "bcrypt-ts";
 
 export const authenticate = async (req: Request, res: Response) => {
    try {
@@ -18,7 +19,10 @@ export const authenticate = async (req: Request, res: Response) => {
          return;
       }
 
-      if (user.password !== password) {
+      const hash = user.password;
+      const isValid = await compare(password, hash);
+
+      if (!isValid) {
          res.status(401).json({
             success: false,
             message: "Credenciales invalidas",
