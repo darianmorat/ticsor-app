@@ -37,12 +37,12 @@ function App() {
       <>
          <Wrapper>
             <Routes>
-               <Route path="/" element={isAuth ? <Navigate to="/learn" /> : <Login />} />
+               <Route path="/" element={isAuth ? <Navigate to="/home" /> : <Login />} />
                <Route path="/404" element={<NotFound />} />
 
                <Route element={<PrivateRoute />}>
                   <Route element={<Default />}>
-                     <Route path="/learn" element={<Learn />} />
+                     <Route path="/home" element={<Learn />} />
                      <Route path="/:username" element={<Profile />} />
                   </Route>
                </Route>

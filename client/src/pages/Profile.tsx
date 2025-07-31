@@ -40,7 +40,7 @@ export const Profile = () => {
    }
 
    return (
-      <LayoutContainer className="my-4">
+      <LayoutContainer>
          {isMyProfile && (
             <div className="mb-8">
                <h1 className="text-3xl font-bold">Mi perfil</h1>
