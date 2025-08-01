@@ -80,7 +80,7 @@ export const Learn = () => {
 
    const [selectedModule, setSelectedModule] = useState(null);
    const [userProgress, setUserProgress] = useState({
-      completedLessons: [1, 2],
+      completedLessons: [1],
    });
 
    const completeLesson = (lessonId: number) => {
@@ -209,7 +209,7 @@ export const Learn = () => {
 
                            <div className="flex items-center gap-3">
                               {isCompleted && (
-                                 <span className="bg-green-100 text-green-800 px-2 py-1 rounded-md text-sm">
+                                 <span className="bg-green-100 dark:bg-green-200/20 text-green-800 dark:text-green-300/80 px-2 py-1 rounded-md text-sm">
                                     Completado
                                  </span>
                               )}
@@ -249,13 +249,12 @@ export const Learn = () => {
 
    return (
       <LayoutContainer className="flex flex-col gap-8">
-         <h1 className="text-3xl font-bold text-center text-gray-800 mt-4">
+         <h1 className="text-3xl font-bold text-center mt-4">
             Aprende{" "}
             <span className="relative inline-block">
                <span className="relative z-1">lengua de señas</span>
                <span className="absolute inset-0 bg-yellow-300 transform skew-y-1 animate-pulse opacity-70"></span>
-            </span>{" "}
-            colombiana
+            </span>
          </h1>
          <div className="flex flex-col gap-2">
             <div className="flex justify-between items-center">
@@ -295,7 +294,7 @@ export const Learn = () => {
                return (
                   <div
                      key={module.id}
-                     className="bg-gray-200 dark:bg-gray-200/30 border rounded-md p-2"
+                     className={`bg-gray-200 dark:bg-gray-200/30 border rounded-md p-2 ${!isUnlocked && "text-muted-foreground"}`}
                   >
                      <div className="bg-background rounded-md p-4 flex flex-col gap-5 shadow-md">
                         <div className="flex gap-2">
