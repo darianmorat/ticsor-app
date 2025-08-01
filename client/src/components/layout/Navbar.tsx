@@ -27,11 +27,11 @@ export const Navbar = () => {
    const username = user?.username;
 
    return (
-      <nav className="w-full bg-zinc-100 dark:bg-zinc-900 border-b sticky top-0 z-1">
+      <nav className="w-full bg-zinc-100 dark:bg-zinc-900 border-b sticky top-0 z-10 shadow">
          <LayoutContainer>
             <div className="flex gap-4 justify-between">
                <a
-                  onClick={() => navigate("/learn")}
+                  onClick={() => navigate("/home")}
                   className="flex items-center gap-2 font-medium whitespace-nowrap cursor-pointer"
                >
                   <img src={logo} className="h-8 size-10 dark:invert" alt="Ticsor Logo" />

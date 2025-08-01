@@ -7,14 +7,14 @@ export const setCookie = (res: Response, token: string) => {
       httpOnly: true,
       secure: isProduction,
       sameSite: isProduction ? "none" : "lax",
-      maxAge: 60 * 60 * 1000,
+      maxAge: 5 * 60 * 60 * 1000,
    });
 
    res.cookie("flag", "1", {
       httpOnly: false,
       secure: isProduction,
       sameSite: isProduction ? "none" : "lax",
-      maxAge: 60 * 60 * 1000,
+      maxAge: 5 * 60 * 60 * 1000,
    });
 
    return res;
