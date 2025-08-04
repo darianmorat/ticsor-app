@@ -1,6 +1,7 @@
 import { LayoutContainer } from "@/components/layout/Container";
 import { Button } from "@/components/ui/button";
 import {
+   ArrowLeft,
    Book,
    BookOpen,
    Brain,
@@ -8,6 +9,7 @@ import {
    Lock,
    Play,
    Target,
+   Type,
    Users,
 } from "lucide-react";
 import { useState, type JSX } from "react";
@@ -24,12 +26,48 @@ export const Learn = () => {
    type Lesson = {
       id: number;
       title: string;
-      type: string;
+      type: string; // video, activity, game
       completed: boolean;
    };
 
-   // types can be just video, activity or game
-   // create a types check for it, cuase u also need quizzes
+   type AlphabetLetter = {
+      letter: string;
+      practiced: boolean;
+   };
+
+   type UserProgress = {
+      completedLessons: number[];
+      practicedLetters: string[];
+   };
+
+   const alphabet: AlphabetLetter[] = [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J",
+      "K",
+      "L",
+      "M",
+      "N",
+      "O",
+      "P",
+      "Q",
+      "R",
+      "S",
+      "T",
+      "U",
+      "V",
+      "W",
+      "X",
+      "Y",
+      "Z",
+   ].map((letter) => ({ letter, practiced: false }));
 
    const modules = [
       {
@@ -37,7 +75,7 @@ export const Learn = () => {
          title: "Abecedario en Lengua de Señas Colombiana (LSC)",
          icon: <Book />,
          lessons: [
-            { id: 1, title: "Letra A", type: "video", completed: true },
+            { id: 1, title: "Abecedario", type: "activity", completed: true },
             { id: 2, title: "Letra B", type: "video", completed: true },
             { id: 3, title: "Letra C", type: "video", completed: false },
             { id: 4, title: "Actividad Práctica", type: "activity", completed: false },
@@ -79,8 +117,10 @@ export const Learn = () => {
    ];
 
    const [selectedModule, setSelectedModule] = useState(null);
-   const [userProgress, setUserProgress] = useState({
-      completedLessons: [1],
+   const [showAlphabet, setShowAlphabet] = useState(false);
+   const [userProgress, setUserProgress] = useState<UserProgress>({
+      completedLessons: [],
+      practicedLetters: [],
    });
 
    const completeLesson = (lessonId: number) => {
@@ -92,12 +132,24 @@ export const Learn = () => {
       }
    };
 
+   const practiceAlphabetLetter = (letter: string) => {
+      if (!userProgress.practicedLetters.includes(letter)) {
+         setUserProgress((prev) => ({
+            ...prev,
+            practicedLetters: [...prev.practicedLetters, letter],
+         }));
+      }
+   };
+
    const getModuleProgress = (module: moduleProps) => {
       const completedCount = module.lessons.filter((lesson) =>
          userProgress.completedLessons.includes(lesson.id),
       ).length;
 
       return (completedCount / module.lessons.length) * 100;
+   };
+   const getAlphabetProgress = () => {
+      return (userProgress.practicedLetters.length / 26) * 100;
    };
 
    const isModuleUnlocked = (module: moduleProps) => {
@@ -110,20 +162,110 @@ export const Learn = () => {
       return previousModuleProgress >= 80;
    };
 
-   const getLessonIcon = (type: string, completed: boolean) => {
+   const getLessonIcon = (type: string, completed: boolean, isAccessible: boolean) => {
+      let accesible;
+      if (!isAccessible) accesible = "opacity-40";
+
       if (completed) return <CheckCircle className="w-5 h-5 text-green-500" />;
 
       switch (type) {
          case "video":
-            return <Play className="w-5 h-5 text-blue-500" />;
+            return <Play className={`w-5 h-5 text-blue-500 ${accesible}`} />;
          case "activity":
-            return <Book className="w-5 h-5 text-orange-500" />;
+            return <Book className={`w-5 h-5 text-orange-500 ${accesible}`} />;
          case "game":
-            return <Target className="w-5 h-5 text-purple-500" />;
+            return <Target className={`w-5 h-5 text-purple-500 ${accesible}`} />;
          default:
-            return <Play className="w-5 h-5 text-gray-500" />;
+            return <Play className={`w-5 h-5 text-gray-500 ${accesible}`} />;
       }
    };
+
+   const totalLesssons = modules.reduce(
+      (total, module) => total + module.lessons.length,
+      0,
+   );
+
+   if (showAlphabet) {
+      return (
+         <LayoutContainer>
+            <button
+               onClick={() => setShowAlphabet(false)}
+               className="mb-6 text-blue-600 hover:text-blue-800 font-medium flex items-center gap-2"
+            >
+               <ArrowLeft className="w-4 h-4" /> Volver al inicio
+            </button>
+
+            <div className="flex flex-col gap-2 mb-8">
+               <div className="flex justify-between items-center">
+                  <div>
+                     <h3 className="text-xl font-medium">Mi progreso:</h3>
+                     <p className="text-muted-foreground text-sm">
+                        {userProgress.practicedLetters.length < 6 ? (
+                           <>Suerte!</>
+                        ) : userProgress.practicedLetters.length < 26 ? (
+                           <>Te falta poco!</>
+                        ) : (
+                           <>Lo lograste!</>
+                        )}
+                     </p>
+                  </div>
+                  <div className="flext flex-col gap-2 text-end">
+                     <p className="text-xl font-medium">
+                        {userProgress.practicedLetters.length}/{alphabet.length}
+                     </p>
+                     <p className="text-muted-foreground text-sm">Letras completas</p>
+                  </div>
+               </div>
+               <div className="w-full bg-gray-200 dark:bg-gray-200/20 rounded-full h-4">
+                  <div
+                     className={`${userProgress.practicedLetters.length === 26 ? "bg-green-500" : "bg-gradient-to-r from-purple-500 to-green-500"} h-4 rounded-full transition-all duration-500`}
+                     style={{
+                        width: `${getAlphabetProgress()}%`,
+                     }}
+                  ></div>
+               </div>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+               {alphabet.map(({ letter }) => {
+                  const isPracticed = userProgress.practicedLetters.includes(letter);
+
+                  return (
+                     <div
+                        key={letter}
+                        className={`rounded-lg border p-6 text-center shadow-md ${
+                           isPracticed
+                              ? "border-green-500 dark:border-green-400/30 bg-green-50 dark:bg-green-900/20"
+                              : "border-purple-400 dark:border-purple-400/30 bg-purple-50 dark:bg-purple-900/20"
+                        }`}
+                     >
+                        <div className="flex flex-col items-center gap-3">
+                           <div
+                              className={`text-3xl font-medium ${isPracticed ? "text-green-600" : "text-purple-600"}`}
+                           >
+                              {letter}
+                           </div>
+
+                           <Button
+                              onClick={() => practiceAlphabetLetter(letter)}
+                              size="sm"
+                              className={`w-full ${
+                                 isPracticed
+                                    ? "bg-green-500 hover:bg-green-600"
+                                    : "bg-purple-500 hover:bg-purple-600"
+                              }`}
+                           >
+                              {isPracticed ? <CheckCircle /> : <BookOpen />}
+                              {isPracticed ? "Repasar" : "Practicar"}
+                           </Button>
+                        </div>
+                     </div>
+                  );
+               })}
+            </div>
+         </LayoutContainer>
+      );
+   }
 
    if (selectedModule) {
       const module = modules.find((m) => m.id === selectedModule);
@@ -133,12 +275,12 @@ export const Learn = () => {
          <LayoutContainer>
             <button
                onClick={() => setSelectedModule(null)}
-               className="mb-6 text-blue-600 hover:text-blue-800 font-medium"
+               className="mb-6 text-blue-600 hover:text-blue-800 font-medium flex items-center gap-2"
             >
-               ← Volver a módulos
+               <ArrowLeft className="w-4 h-4" /> Volver al inicio
             </button>
 
-            <div className="bg-gray-200 dark:bg-gray-200/30 border rounded-md p-2 mb-8">
+            <div className="bg-gray-200 dark:bg-gray-200/30 rounded-md p-2 mb-8">
                <div className="bg-background rounded-md p-4 flex flex-col gap-5 shadow-md">
                   <div className="flex flex-col gap-4">
                      <div className="flex gap-2">
@@ -147,7 +289,7 @@ export const Learn = () => {
                      <div className="flex items-center gap-2 mt-2 w-full">
                         <div className="w-full">
                            <div className="flex justify-between items-center mb-2">
-                              <span className="text-sm">
+                              <span className="text-sm font-medium">
                                  {getModuleProgress(module) === 100
                                     ? "Completado"
                                     : "Progreso"}
@@ -186,34 +328,41 @@ export const Learn = () => {
                                 : "border-gray-300"
                         }`}
                      >
-                        <div className="flex items-center justify-between">
-                           <div className="flex items-center gap-4">
-                              {getLessonIcon(lesson.type, isCompleted)}
-                              <div>
-                                 <h3
-                                    className={`font-semibold ${
-                                       isAccessible ? "" : "text-gray-400"
-                                    }`}
-                                 >
-                                    {lesson.title}
-                                 </h3>
-                                 <p className="text-sm text-muted-foreground capitalize">
-                                    {lesson.type === "video"
-                                       ? "Video"
-                                       : lesson.type === "activity"
-                                         ? "Actividad"
-                                         : "Juego"}
-                                 </p>
+                        <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
+                           <div className="flex items-center justify-between gap-4 w-full">
+                              <div className="flex gap-2 items-center">
+                                 {getLessonIcon(lesson.type, isCompleted, isAccessible)}
+                                 <div>
+                                    <h3
+                                       className={`font-medium ${
+                                          isAccessible ? "" : "text-gray-400"
+                                       }`}
+                                    >
+                                       {lesson.title}
+                                    </h3>
+                                    <p
+                                       className={`text-sm ${
+                                          isAccessible
+                                             ? "text-muted-foreground"
+                                             : "text-muted-foreground/50"
+                                       }`}
+                                    >
+                                       {lesson.type === "video"
+                                          ? "Video"
+                                          : lesson.type === "activity"
+                                            ? "Actividad"
+                                            : "Juego"}
+                                    </p>
+                                 </div>
                               </div>
-                           </div>
-
-                           <div className="flex items-center gap-3">
                               {isCompleted && (
                                  <span className="bg-green-100 dark:bg-green-200/20 text-green-800 dark:text-green-300/80 px-2 py-1 rounded-md text-sm">
                                     Completado
                                  </span>
                               )}
+                           </div>
 
+                           <div className="flex items-center gap-3 w-full sm:w-60">
                               <Button
                                  onClick={() =>
                                     !isCompleted &&
@@ -221,7 +370,7 @@ export const Learn = () => {
                                     completeLesson(lesson.id)
                                  }
                                  disabled={!isAccessible}
-                                 className={`${isCompleted && "bg-green-500 hover:bg-green-600"} ${!isAccessible && "bg-gray-300 text-gray-700 cursor-not-allowed"}`}
+                                 className={`w-full ${isCompleted && "bg-green-500 hover:bg-green-600"} ${!isAccessible && "bg-gray-300 text-gray-700 cursor-not-allowed"}`}
                               >
                                  {isCompleted ? (
                                     <>
@@ -256,10 +405,40 @@ export const Learn = () => {
                <span className="absolute inset-0 bg-yellow-300 transform skew-y-1 animate-pulse opacity-70"></span>
             </span>
          </h1>
+
+         <div className="bg-gradient-to-r from-purple-200 to-pink-200 dark:from-purple-900/30 dark:to-pink-900/30 rounded-md p-2">
+            <div className="bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 rounded-md p-4 flex flex-col md:flex-row justify-between gap-5 shadow-md">
+               <div className="flex gap-2 items-center">
+                  <Type className="h-20 w-20 text-purple-600 hidden sm:block" />
+                  <div>
+                     <h2 className="flex gap-3 items-center text-xl font-bold text-purple-800 dark:text-purple-200">
+                        Fundamentos: Abecedario LSC
+                     </h2>
+                     <p className="text-purple-700 dark:text-purple-300 max-w-sm">
+                        Base esencial para comunicarte en lengua de señas. Siempre
+                        disponible para practicar.
+                     </p>
+                  </div>
+               </div>
+
+               <div className="flex flex-col gap-2 justify-center">
+                  <Button
+                     onClick={() => setShowAlphabet(true)}
+                     className="bg-purple-600 hover:bg-purple-700 text-white w-full"
+                  >
+                     {getAlphabetProgress() > 0 ? <Play /> : <BookOpen />}
+                     {getAlphabetProgress() > 0
+                        ? "Continuar Alfabeto"
+                        : "Empezar Alfabeto"}
+                  </Button>
+               </div>
+            </div>
+         </div>
+
          <div className="flex flex-col gap-2">
             <div className="flex justify-between items-center">
                <div>
-                  <h3 className="text-xl font-medium">Progreso general:</h3>
+                  <h3 className="text-xl font-medium">Mi progreso:</h3>
                   <p className="text-muted-foreground text-sm">
                      {userProgress.completedLessons.length < 6 ? (
                         <>Suerte!</>
@@ -271,21 +450,22 @@ export const Learn = () => {
                   </p>
                </div>
                <div className="flext flex-col gap-2 text-end">
-                  <p className="text-xl font-bold">
-                     {userProgress.completedLessons.length}/12
+                  <p className="text-xl font-medium ">
+                     {userProgress.completedLessons.length}/{totalLesssons}
                   </p>
-                  <p className="text-muted-foreground text-sm">Lecciones completadas</p>
+                  <p className="text-muted-foreground text-sm">Lecciones completas</p>
                </div>
             </div>
             <div className="w-full bg-gray-200 dark:bg-gray-200/20 rounded-full h-4">
                <div
-                  className="bg-gradient-to-r from-blue-500 to-green-500 h-4 rounded-full transition-all duration-500"
+                  className={`${userProgress.completedLessons.length === 12 ? "bg-green-500" : "bg-gradient-to-r from-blue-500 to-green-500"} h-4 rounded-full transition-all duration-500`}
                   style={{
                      width: `${(userProgress.completedLessons.length / 12) * 100}%`,
                   }}
                ></div>
             </div>
          </div>
+
          <div className="grid gap-8 grid-cols-1 md:grid-cols-2">
             {modules.map((module) => {
                const progress = getModuleProgress(module);
@@ -294,7 +474,7 @@ export const Learn = () => {
                return (
                   <div
                      key={module.id}
-                     className={`bg-gray-200 dark:bg-gray-200/30 border rounded-md p-2 ${!isUnlocked && "text-muted-foreground"}`}
+                     className={`bg-gray-200 dark:bg-gray-200/30 rounded-md p-2 ${!isUnlocked && "text-muted-foreground/50"}`}
                   >
                      <div className="bg-background rounded-md p-4 flex flex-col gap-5 shadow-md">
                         <div className="flex gap-2">
@@ -303,7 +483,7 @@ export const Learn = () => {
 
                         <div className="">
                            <div className="flex justify-between items-center mb-2">
-                              <span className="text-sm">
+                              <span className="text-sm font-medium">
                                  {progress === 100 ? "Completado" : "Progreso"}
                               </span>
                               <span className="text-sm font-medium">
@@ -321,16 +501,20 @@ export const Learn = () => {
                         <Button
                            disabled={!isUnlocked}
                            // cursor style not applied!
-                           className={`${progress === 100 && "bg-green-500 hover:bg-green-600"} ${!isUnlocked && "bg-gray-300 text-gray-700 cursor-not-allowed"}`}
+                           className={`${progress === 100 && "bg-green-500 hover:bg-green-500/90"} ${!isUnlocked && "bg-gray-300 text-gray-700 cursor-not-allowed"}`}
                            onClick={() => isUnlocked && setSelectedModule(module.id)}
                         >
                            {progress === 100 ? (
                               <>
                                  <CheckCircle /> Revisar módulo
                               </>
-                           ) : isUnlocked ? (
+                           ) : isUnlocked && progress === 0 ? (
                               <>
                                  <BookOpen /> Empezar módulo
+                              </>
+                           ) : isUnlocked ? (
+                              <>
+                                 <Play /> Continuar módulo
                               </>
                            ) : (
                               <>
