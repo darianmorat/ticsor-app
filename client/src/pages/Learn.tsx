@@ -30,44 +30,39 @@ export const Learn = () => {
       completed: boolean;
    };
 
-   type AlphabetLetter = {
-      letter: string;
-      practiced: boolean;
-   };
-
    type UserProgress = {
       completedLessons: number[];
       practicedLetters: string[];
    };
 
-   const alphabet: AlphabetLetter[] = [
-      "A",
-      "B",
-      "C",
-      "D",
-      "E",
-      "F",
-      "G",
-      "H",
-      "I",
-      "J",
-      "K",
-      "L",
-      "M",
-      "N",
-      "O",
-      "P",
-      "Q",
-      "R",
-      "S",
-      "T",
-      "U",
-      "V",
-      "W",
-      "X",
-      "Y",
-      "Z",
-   ].map((letter) => ({ letter, practiced: false }));
+   const alphabet = [
+      { id: 1, letter: "A", completed: false },
+      { id: 2, letter: "B", completed: false },
+      { id: 3, letter: "C", completed: false },
+      { id: 4, letter: "D", completed: false },
+      { id: 5, letter: "E", completed: false },
+      { id: 6, letter: "F", completed: false },
+      { id: 7, letter: "G", completed: false },
+      { id: 8, letter: "H", completed: false },
+      { id: 9, letter: "I", completed: false },
+      { id: 10, letter: "J", completed: false },
+      { id: 11, letter: "K", completed: false },
+      { id: 12, letter: "L", completed: false },
+      { id: 13, letter: "M", completed: false },
+      { id: 14, letter: "N", completed: false },
+      { id: 15, letter: "O", completed: false },
+      { id: 16, letter: "P", completed: false },
+      { id: 17, letter: "Q", completed: false },
+      { id: 18, letter: "R", completed: false },
+      { id: 19, letter: "S", completed: false },
+      { id: 20, letter: "T", completed: false },
+      { id: 21, letter: "U", completed: false },
+      { id: 22, letter: "V", completed: false },
+      { id: 23, letter: "W", completed: false },
+      { id: 24, letter: "X", completed: false },
+      { id: 25, letter: "Y", completed: false },
+      { id: 26, letter: "Z", completed: false },
+   ];
 
    const modules = [
       {
@@ -227,12 +222,14 @@ export const Learn = () => {
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-               {alphabet.map(({ letter }) => {
-                  const isPracticed = userProgress.practicedLetters.includes(letter);
+               {alphabet.map((letter) => {
+                  const isPracticed = userProgress.practicedLetters.includes(
+                     letter.letter,
+                  );
 
                   return (
                      <div
-                        key={letter}
+                        key={letter.id}
                         className={`rounded-lg border p-6 text-center shadow-md ${
                            isPracticed
                               ? "border-green-500 dark:border-green-400/30 bg-green-50 dark:bg-green-900/20"
@@ -243,11 +240,11 @@ export const Learn = () => {
                            <div
                               className={`text-3xl font-medium ${isPracticed ? "text-green-600" : "text-purple-600"}`}
                            >
-                              {letter}
+                              {letter.letter}
                            </div>
 
                            <Button
-                              onClick={() => practiceAlphabetLetter(letter)}
+                              onClick={() => practiceAlphabetLetter(letter.letter)}
                               size="sm"
                               className={`w-full ${
                                  isPracticed
