@@ -1,5 +1,6 @@
 import { LayoutContainer } from "@/components/layout/Container";
 import { Button } from "@/components/ui/button";
+import { useAlphabetStore } from "@/stores/useAlphabetStore";
 import {
    ArrowLeft,
    Book,
@@ -12,57 +13,45 @@ import {
    Type,
    Users,
 } from "lucide-react";
-import { useState, type JSX } from "react";
+import { useEffect, useState, type JSX } from "react";
+
+type moduleProps = {
+   id: number;
+   title: string;
+   icon: JSX.Element;
+   lessons: Lesson[];
+   completed: boolean;
+};
+
+type Lesson = {
+   id: number;
+   title: string;
+   type: string; // video, activity, game
+   completed: boolean;
+};
+
+type UserProgress = {
+   completedLessons: number[];
+   practicedLetters: string[];
+};
 
 export const Learn = () => {
-   type moduleProps = {
-      id: number;
-      title: string;
-      icon: JSX.Element;
-      lessons: Lesson[];
-      completed: boolean;
-   };
+   const { alphabet, getAlphabet } = useAlphabetStore();
+   const [showAlphabet, setShowAlphabet] = useState(false);
+   const [selectedModule, setSelectedModule] = useState(null);
 
-   type Lesson = {
-      id: number;
-      title: string;
-      type: string; // video, activity, game
-      completed: boolean;
-   };
+   const [userProgress, setUserProgress] = useState<UserProgress>({
+      completedLessons: [],
+      practicedLetters: [],
+   });
 
-   type UserProgress = {
-      completedLessons: number[];
-      practicedLetters: string[];
-   };
+   useEffect(() => {
+      getAlphabet();
+   }, [alphabet, getAlphabet]);
 
-   const alphabet = [
-      { id: 1, letter: "A", completed: false },
-      { id: 2, letter: "B", completed: false },
-      { id: 3, letter: "C", completed: false },
-      { id: 4, letter: "D", completed: false },
-      { id: 5, letter: "E", completed: false },
-      { id: 6, letter: "F", completed: false },
-      { id: 7, letter: "G", completed: false },
-      { id: 8, letter: "H", completed: false },
-      { id: 9, letter: "I", completed: false },
-      { id: 10, letter: "J", completed: false },
-      { id: 11, letter: "K", completed: false },
-      { id: 12, letter: "L", completed: false },
-      { id: 13, letter: "M", completed: false },
-      { id: 14, letter: "N", completed: false },
-      { id: 15, letter: "O", completed: false },
-      { id: 16, letter: "P", completed: false },
-      { id: 17, letter: "Q", completed: false },
-      { id: 18, letter: "R", completed: false },
-      { id: 19, letter: "S", completed: false },
-      { id: 20, letter: "T", completed: false },
-      { id: 21, letter: "U", completed: false },
-      { id: 22, letter: "V", completed: false },
-      { id: 23, letter: "W", completed: false },
-      { id: 24, letter: "X", completed: false },
-      { id: 25, letter: "Y", completed: false },
-      { id: 26, letter: "Z", completed: false },
-   ];
+   // { id: 1, letter: "A", completed: false },
+   // { id: 2, letter: "B", completed: false },
+   // { id: 3, letter: "C", completed: false },
 
    const modules = [
       {
@@ -111,22 +100,7 @@ export const Learn = () => {
       },
    ];
 
-   const [selectedModule, setSelectedModule] = useState(null);
-   const [showAlphabet, setShowAlphabet] = useState(false);
-   const [userProgress, setUserProgress] = useState<UserProgress>({
-      completedLessons: [],
-      practicedLetters: [],
-   });
-
-   const completeLesson = (lessonId: number) => {
-      if (!userProgress.completedLessons.includes(lessonId)) {
-         setUserProgress((prev) => ({
-            ...prev,
-            completedLessons: [...prev.completedLessons, lessonId],
-         }));
-      }
-   };
-
+   // ALPHABET
    const practiceAlphabetLetter = (letter: string) => {
       if (!userProgress.practicedLetters.includes(letter)) {
          setUserProgress((prev) => ({
@@ -136,15 +110,17 @@ export const Learn = () => {
       }
    };
 
+   const getAlphabetProgress = () => {
+      return (userProgress.practicedLetters.length / alphabet.length) * 100;
+   };
+
+   // MODULE
    const getModuleProgress = (module: moduleProps) => {
       const completedCount = module.lessons.filter((lesson) =>
          userProgress.completedLessons.includes(lesson.id),
       ).length;
 
       return (completedCount / module.lessons.length) * 100;
-   };
-   const getAlphabetProgress = () => {
-      return (userProgress.practicedLetters.length / 26) * 100;
    };
 
    const isModuleUnlocked = (module: moduleProps) => {
@@ -157,6 +133,7 @@ export const Learn = () => {
       return previousModuleProgress >= 80;
    };
 
+   // LESSON
    const getLessonIcon = (type: string, completed: boolean, isAccessible: boolean) => {
       let accesible;
       if (!isAccessible) accesible = "opacity-40";
@@ -179,6 +156,14 @@ export const Learn = () => {
       (total, module) => total + module.lessons.length,
       0,
    );
+   const completeLesson = (lessonId: number) => {
+      if (!userProgress.completedLessons.includes(lessonId)) {
+         setUserProgress((prev) => ({
+            ...prev,
+            completedLessons: [...prev.completedLessons, lessonId],
+         }));
+      }
+   };
 
    if (showAlphabet) {
       return (
@@ -213,7 +198,7 @@ export const Learn = () => {
                </div>
                <div className="w-full bg-gray-200 dark:bg-gray-200/20 rounded-full h-4">
                   <div
-                     className={`${userProgress.practicedLetters.length === 26 ? "bg-green-500" : "bg-gradient-to-r from-purple-500 to-green-500"} h-4 rounded-full transition-all duration-500`}
+                     className={`${userProgress.practicedLetters.length === alphabet.length ? "bg-green-500" : "bg-gradient-to-r from-purple-500 to-green-500"} h-4 rounded-full transition-all duration-500`}
                      style={{
                         width: `${getAlphabetProgress()}%`,
                      }}
@@ -238,7 +223,7 @@ export const Learn = () => {
                      >
                         <div className="flex flex-col items-center gap-3">
                            <div
-                              className={`text-3xl font-medium ${isPracticed ? "text-green-600" : "text-purple-600"}`}
+                              className={`text-3xl font-medium capitalize ${isPracticed ? "text-green-600" : "text-purple-600"}`}
                            >
                               {letter.letter}
                            </div>

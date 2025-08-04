@@ -38,7 +38,7 @@ export const authenticate = async (req: Request, res: Response) => {
          success: true,
          message: "Autenticación exitosa",
       });
-   } catch (error) {
+   } catch {
       res.status(500).json({
          success: false,
          message: "server error",
@@ -54,7 +54,7 @@ export const logout = (_req: Request, res: Response) => {
          success: true,
          message: "Sesión cerrada",
       });
-   } catch (error) {
+   } catch {
       res.status(500).json({
          success: false,
          message: "server error",

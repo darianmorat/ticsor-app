@@ -1,11 +1,15 @@
-import { seedUsers } from "./seeds/users";
+import { seedAlphabet } from "./seeds/alphabet";
+// import { seedUsers } from "./seeds/users";
 
 const main = async () => {
    console.log("Starting database seeding...");
 
    try {
-      console.log("Seeding users...");
-      await seedUsers();
+      // console.log("Seeding users...");
+      // await seedUsers();
+
+      console.log("Seeding alphabet...");
+      await seedAlphabet();
 
       console.log("Seeding completed");
    } catch (error) {

@@ -9,7 +9,7 @@ export const getUsers = async (_req: Request, res: Response) => {
          success: true,
          users: users,
       });
-   } catch (error) {
+   } catch {
       res.status(500).json({
          success: false,
          message: "server error",
@@ -34,7 +34,7 @@ export const getUser = async (req: Request, res: Response) => {
          success: true,
          user: user,
       });
-   } catch (error) {
+   } catch {
       res.status(500).json({
          success: false,
          message: "server error",
@@ -74,7 +74,7 @@ export const createUser = async (req: Request, res: Response) => {
          message: `Usuario "${user.name}" creado`,
          newUser: user,
       });
-   } catch (error) {
+   } catch {
       res.status(500).json({
          success: false,
          message: "server error",
@@ -93,7 +93,7 @@ export const editUser = async (req: Request, res: Response) => {
          message: "Información actualizada",
          user: user,
       });
-   } catch (error) {
+   } catch {
       res.status(500).json({
          success: false,
          message: "server error",
@@ -110,7 +110,7 @@ export const deleteUser = async (req: Request, res: Response) => {
          success: true,
          message: `Usuario "${user.name}" eliminado`,
       });
-   } catch (error) {
+   } catch {
       res.status(500).json({
          success: false,
          message: "server error",
