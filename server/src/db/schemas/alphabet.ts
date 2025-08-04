@@ -2,7 +2,7 @@ import { uuid, boolean, varchar, pgTable, char } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { users } from "./users";
 
-export const alphabetLetters = pgTable("alphabet_letters", {
+export const alphabet = pgTable("alphabet", {
    id: uuid("id")
       .primaryKey()
       .default(sql`gen_random_uuid()`),
@@ -15,6 +15,6 @@ export const alphabetProgress = pgTable("alphabet_progress", {
       .primaryKey()
       .default(sql`gen_random_uuid()`),
    userId: uuid("user_id").references(() => users.id),
-   letterId: uuid("letter_id").references(() => alphabetLetters.id),
+   letterId: uuid("letter_id").references(() => alphabet.id),
    completed: boolean("completed").default(false),
 });

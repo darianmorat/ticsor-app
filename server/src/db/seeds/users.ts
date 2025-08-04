@@ -11,14 +11,14 @@ export const seedUsers = async () => {
          name: "Admin User",
          username: "admin01",
          email: "admin@gmail.com",
+         password: "$2b$10$o1l8r6d7Cut/cHC1h1XR0.8M8MlwYNdXhcUw7mAMA7sevLSPOIGoK",
          role: "admin",
-         password: "admin123",
       },
       {
          name: "User",
          username: "user01",
          email: "user@gmail.com",
-         password: "user123",
+         password: "$2b$10$PaD3KDJNSKXsaACSc24Jk.BYWAvTRMPwAFrDKh2Pqg55KbP0WWM9m",
       },
    ];
 

@@ -1,5 +1,7 @@
+import { seedUsers } from "./seeds/users";
 import { seedAlphabet } from "./seeds/alphabet";
-// import { seedUsers } from "./seeds/users";
+import { seedModules } from "./seeds/modules";
+import { seedLessons } from "./seeds/lessons";
 
 const main = async () => {
    console.log("Starting database seeding...");
@@ -10,6 +12,12 @@ const main = async () => {
 
       console.log("Seeding alphabet...");
       await seedAlphabet();
+
+      // console.log("Seeding modules...");
+      // await seedModules();
+      //
+      // console.log("Seeding modules...");
+      // await seedLessons();
 
       console.log("Seeding completed");
    } catch (error) {

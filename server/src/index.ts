@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import authRoute from "./routes/auth.route";
 import userRoute from "./routes/user.route";
 import alphabetRoute from "./routes/alphabet.route";
+import moduleRoute from "./routes/module.route";
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(
 app.use("/auth", authRoute);
 app.use("/user", userRoute);
 app.use("/alphabet", alphabetRoute);
+app.use("/module", moduleRoute);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
