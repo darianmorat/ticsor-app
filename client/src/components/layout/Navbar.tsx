@@ -35,7 +35,7 @@ export const Navbar = () => {
                   className="flex items-center gap-2 font-medium whitespace-nowrap cursor-pointer"
                >
                   <img src={logo} className="h-8 size-10 dark:invert" alt="Ticsor Logo" />
-                  <p className="hidden sm:block">Ticsor App</p>
+                  <p className="">Ticsor App</p>
                </a>
                <div className="flex gap-4">
                   {isAuth && (

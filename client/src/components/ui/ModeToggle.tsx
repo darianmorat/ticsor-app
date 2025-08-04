@@ -37,7 +37,6 @@ export function ModeToggle() {
 
          const handleChange = () => {
             applyTheme("system");
-            console.log("theme changed"); // testing
          };
 
          darkMedia.addEventListener("change", handleChange);
