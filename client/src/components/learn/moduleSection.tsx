@@ -101,7 +101,7 @@ export const ModuleSection = () => {
                      key={module.id}
                      className={`bg-gray-200 dark:bg-gray-200/30 rounded-md p-2 ${!isUnlocked && "text-muted-foreground/50"}`}
                   >
-                     <div className="bg-background rounded-md p-4 flex flex-col gap-5 shadow-md">
+                     <div className="bg-background rounded-md p-4 flex flex-col gap-5 shadow-md h-full">
                         <div className="flex gap-2">
                            <Layers /> <p className="font-medium">{module.title}</p>
                         </div>
@@ -132,21 +132,22 @@ export const ModuleSection = () => {
                            }
                         >
                            {progress === 100 ? (
-                              <>
-                                 <CheckCircle /> Revisar módulo
-                              </>
+                              <CheckCircle />
                            ) : isUnlocked && progress === 0 ? (
-                              <>
-                                 <BookOpen /> Empezar módulo
-                              </>
+                              <BookOpen />
                            ) : isUnlocked ? (
-                              <>
-                                 <Play /> Continuar módulo
-                              </>
+                              <Play />
                            ) : (
-                              <>
-                                 <Lock /> Bloqueado
-                              </>
+                              <Lock />
+                           )}
+                           {progress === 100 ? (
+                              <>Revisar módulo</>
+                           ) : isUnlocked && progress === 0 ? (
+                              <>Empezar módulo</>
+                           ) : isUnlocked ? (
+                              <>Continuar módulo</>
+                           ) : (
+                              <>Bloqueado</>
                            )}
                         </Button>
                      </div>

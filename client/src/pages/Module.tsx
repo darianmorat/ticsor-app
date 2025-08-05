@@ -194,17 +194,18 @@ export const Module = () => {
                               className={`w-full ${isCompleted && "bg-green-500 hover:bg-green-600"} ${!isAccessible && "bg-gray-300 text-gray-700 cursor-not-allowed"}`}
                            >
                               {isCompleted ? (
-                                 <>
-                                    <CheckCircle /> Revisar lección
-                                 </>
+                                 <CheckCircle />
                               ) : isAccessible ? (
-                                 <>
-                                    <BookOpen /> Empezar lección
-                                 </>
+                                 <BookOpen />
                               ) : (
-                                 <>
-                                    <Lock /> Bloqueado
-                                 </>
+                                 <Lock />
+                              )}
+                              {isCompleted ? (
+                                 <>Revisar lección</>
+                              ) : isAccessible ? (
+                                 <>Empezar lección</>
+                              ) : (
+                                 <>Bloqueado</>
                               )}
                            </Button>
                         </div>

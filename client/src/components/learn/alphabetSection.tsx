@@ -1,4 +1,4 @@
-import { BookOpen, Play, Type } from "lucide-react";
+import { BookOpen, CheckCircle, Play, Type } from "lucide-react";
 import { Button } from "../ui/button";
 import { useEffect } from "react";
 import { useAlphabetStore } from "@/stores/useAlphabetStore";
@@ -40,8 +40,18 @@ export const AlphabetSection = () => {
                   onClick={() => navigate("/alphabet")}
                   className="bg-purple-600 hover:bg-purple-700 text-white w-full"
                >
-                  {getAlphabetProgress() > 0 ? <Play /> : <BookOpen />}
-                  {getAlphabetProgress() > 0 ? "Continuar Alfabeto" : "Empezar Alfabeto"}
+                  {getAlphabetProgress() === 100 ? (
+                     <CheckCircle />
+                  ) : getAlphabetProgress() > 0 ? (
+                     <Play />
+                  ) : (
+                     <BookOpen />
+                  )}
+                  {getAlphabetProgress() === 100
+                     ? "Revisar Alfabeto"
+                     : getAlphabetProgress() > 0
+                       ? "Continuar Alfabeto"
+                       : "Empezar Alfabeto"}
                </Button>
             </div>
          </div>

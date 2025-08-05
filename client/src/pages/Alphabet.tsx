@@ -87,15 +87,15 @@ export const Alphabet = () => {
                return (
                   <div
                      key={letter.id}
-                     className={`rounded-lg border p-6 text-center shadow-md ${
+                     className={`rounded-md border p-4 text-center shadow-md ${
                         isPracticed
-                           ? "border-green-500 dark:border-green-400/30 bg-green-50 dark:bg-green-900/20"
-                           : "border-purple-400 dark:border-purple-400/30 bg-purple-50 dark:bg-purple-900/20"
+                           ? "border-green-500 dark:border-green-400/30 bg-green-50 dark:bg-green-900/15"
+                           : "border-purple-400 dark:border-purple-400/30 bg-purple-50 dark:bg-purple-900/15"
                      }`}
                   >
                      <div className="flex flex-col items-center gap-3">
                         <div
-                           className={`text-3xl font-medium capitalize ${isPracticed ? "text-green-600" : "text-purple-600"}`}
+                           className={`text-4xl p-4 w-full rounded-md font-medium capitalize ${isPracticed ? "text-green-600 bg-green-200 dark:bg-green-500/15" : "text-purple-600 bg-purple-200 dark:bg-purple-500/10"}`}
                         >
                            {letter.letter}
                         </div>
