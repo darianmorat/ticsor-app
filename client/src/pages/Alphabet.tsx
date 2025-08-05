@@ -18,19 +18,18 @@ export const Alphabet = () => {
 
    useEffect(() => {
       getAlphabet();
-   }, [getAlphabet]);
-
-   useEffect(() => {
       getPracticedLetters();
-   }, [practicedLetters]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
 
    const userPracticedLetters = practicedLetters.filter((l) => l.userId === user?.id);
 
-   const practiceAlphabetLetter = (letterId: string) => {
+   const practiceAlphabetLetter = async (letterId: string) => {
       const alreadyExists = userPracticedLetters.some((l) => l.letterId === letterId);
       if (alreadyExists) return;
 
-      practiceLetter(letterId, true);
+      await practiceLetter(letterId, true);
+      await getPracticedLetters();
    };
 
    const getAlphabetProgress = () => {

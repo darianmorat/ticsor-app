@@ -37,11 +37,9 @@ export const Module = () => {
 
    useEffect(() => {
       getModules();
-   }, [getModules]);
-
-   useEffect(() => {
       getCompletedLessons();
-   }, [completedLessons]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
 
    const userCompletedLessons = completedLessons.filter((l) => l.userId === user?.id);
 
@@ -81,11 +79,12 @@ export const Module = () => {
       }
    };
 
-   const handleCompleteLesson = (lessonId: string) => {
+   const handleCompleteLesson = async (lessonId: string) => {
       const alreadyExists = userCompletedLessons.some((l) => l.lessonId === lessonId);
       if (alreadyExists) return;
 
-      completeLesson(lessonId, true);
+      await completeLesson(lessonId, true);
+      await getCompletedLessons();
    };
 
    return (

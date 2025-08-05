@@ -8,9 +8,9 @@ export const lessons = pgTable("lessons", {
    id: uuid("id")
       .primaryKey()
       .default(sql`gen_random_uuid()`),
-   order: integer("order"),
+   order: integer("order").notNull(),
    title: varchar("title", { length: 255 }).notNull(),
-   type: varchar("type", { length: 50 }),
+   type: varchar("type", { length: 100 }),
    moduleId: uuid("module_id").references(() => modules.id),
 });
 
@@ -20,7 +20,6 @@ export const lessonProgress = pgTable("lesson_progress", {
       .default(sql`gen_random_uuid()`),
    userId: uuid("user_id").references(() => users.id),
    lessonId: uuid("lesson_id").references(() => lessons.id),
-   completed: boolean("completed").default(false),
 });
 
 export const lessonRelations = relations(lessons, ({ one }) => ({

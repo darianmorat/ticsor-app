@@ -2,6 +2,10 @@ import api from "@/api/axios";
 import { toast } from "react-toastify";
 import { create } from "zustand";
 
+// PENDING:
+// WE ARE NOT USING THE LOADING VARIABLE HERE, SHOULD I CALL IT IN THE APP.JSX OR SHOULD
+// I CALL IT IN THE PLACE WHERE IS USED AND THEN CALL THE LOADIND COMPONENT?
+
 type Letter = {
    id: string;
    letter: string;
@@ -15,7 +19,7 @@ type PracticedLetter = {
 };
 
 type Store = {
-   isLoading: boolean;
+   isLoading: boolean; // Not used
    alphabet: Letter[];
    practicedLetters: PracticedLetter[];
    getAlphabet: () => Promise<void>;

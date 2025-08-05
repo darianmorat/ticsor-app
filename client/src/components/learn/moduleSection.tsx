@@ -26,11 +26,9 @@ export const ModuleSection = () => {
 
    useEffect(() => {
       getModules();
-   }, [modules, getModules]);
-
-   useEffect(() => {
       getCompletedLessons();
-   }, [completedLessons]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
 
    const userCompletedLessons = completedLessons.filter((l) => l.userId === user?.id);
 
