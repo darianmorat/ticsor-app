@@ -1,6 +1,6 @@
 import { LayoutContainer } from "@/components/layout/Container";
+import { AlphabetSection } from "@/components/learn/alphabetSection";
 import { Button } from "@/components/ui/button";
-import { useAlphabetStore } from "@/stores/useAlphabetStore";
 import {
    ArrowLeft,
    Book,
@@ -10,10 +10,9 @@ import {
    Lock,
    Play,
    Target,
-   Type,
    Users,
 } from "lucide-react";
-import { useEffect, useState, type JSX } from "react";
+import { useState, type JSX } from "react";
 
 type moduleProps = {
    id: number;
@@ -32,26 +31,14 @@ type Lesson = {
 
 type UserProgress = {
    completedLessons: number[];
-   practicedLetters: string[];
 };
 
 export const Learn = () => {
-   const { alphabet, getAlphabet } = useAlphabetStore();
-   const [showAlphabet, setShowAlphabet] = useState(false);
    const [selectedModule, setSelectedModule] = useState(null);
-
    const [userProgress, setUserProgress] = useState<UserProgress>({
       completedLessons: [],
-      practicedLetters: [],
+      // practicedLetters: [],
    });
-
-   useEffect(() => {
-      getAlphabet();
-   }, [alphabet, getAlphabet]);
-
-   // { id: 1, letter: "A", completed: false },
-   // { id: 2, letter: "B", completed: false },
-   // { id: 3, letter: "C", completed: false },
 
    const modules = [
       {
@@ -99,20 +86,6 @@ export const Learn = () => {
          completed: false,
       },
    ];
-
-   // ALPHABET
-   const practiceAlphabetLetter = (letter: string) => {
-      if (!userProgress.practicedLetters.includes(letter)) {
-         setUserProgress((prev) => ({
-            ...prev,
-            practicedLetters: [...prev.practicedLetters, letter],
-         }));
-      }
-   };
-
-   const getAlphabetProgress = () => {
-      return (userProgress.practicedLetters.length / alphabet.length) * 100;
-   };
 
    // MODULE
    const getModuleProgress = (module: moduleProps) => {
@@ -164,90 +137,6 @@ export const Learn = () => {
          }));
       }
    };
-
-   if (showAlphabet) {
-      return (
-         <LayoutContainer>
-            <button
-               onClick={() => setShowAlphabet(false)}
-               className="mb-6 text-blue-600 hover:text-blue-800 font-medium flex items-center gap-2"
-            >
-               <ArrowLeft className="w-4 h-4" /> Volver al inicio
-            </button>
-
-            <div className="flex flex-col gap-2 mb-8">
-               <div className="flex justify-between items-center">
-                  <div>
-                     <h3 className="text-xl font-medium">Mi progreso:</h3>
-                     <p className="text-muted-foreground text-sm">
-                        {userProgress.practicedLetters.length < 6 ? (
-                           <>Suerte!</>
-                        ) : userProgress.practicedLetters.length < 26 ? (
-                           <>Te falta poco!</>
-                        ) : (
-                           <>Lo lograste!</>
-                        )}
-                     </p>
-                  </div>
-                  <div className="flext flex-col gap-2 text-end">
-                     <p className="text-xl font-medium">
-                        {userProgress.practicedLetters.length}/{alphabet.length}
-                     </p>
-                     <p className="text-muted-foreground text-sm">Letras completas</p>
-                  </div>
-               </div>
-               <div className="w-full bg-gray-200 dark:bg-gray-200/20 rounded-full h-4">
-                  <div
-                     className={`${userProgress.practicedLetters.length === alphabet.length ? "bg-green-500" : "bg-gradient-to-r from-purple-500 to-green-500"} h-4 rounded-full transition-all duration-500`}
-                     style={{
-                        width: `${getAlphabetProgress()}%`,
-                     }}
-                  ></div>
-               </div>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-               {alphabet.map((letter) => {
-                  const isPracticed = userProgress.practicedLetters.includes(
-                     letter.letter,
-                  );
-
-                  return (
-                     <div
-                        key={letter.id}
-                        className={`rounded-lg border p-6 text-center shadow-md ${
-                           isPracticed
-                              ? "border-green-500 dark:border-green-400/30 bg-green-50 dark:bg-green-900/20"
-                              : "border-purple-400 dark:border-purple-400/30 bg-purple-50 dark:bg-purple-900/20"
-                        }`}
-                     >
-                        <div className="flex flex-col items-center gap-3">
-                           <div
-                              className={`text-3xl font-medium capitalize ${isPracticed ? "text-green-600" : "text-purple-600"}`}
-                           >
-                              {letter.letter}
-                           </div>
-
-                           <Button
-                              onClick={() => practiceAlphabetLetter(letter.letter)}
-                              size="sm"
-                              className={`w-full ${
-                                 isPracticed
-                                    ? "bg-green-500 hover:bg-green-600"
-                                    : "bg-purple-500 hover:bg-purple-600"
-                              }`}
-                           >
-                              {isPracticed ? <CheckCircle /> : <BookOpen />}
-                              {isPracticed ? "Repasar" : "Practicar"}
-                           </Button>
-                        </div>
-                     </div>
-                  );
-               })}
-            </div>
-         </LayoutContainer>
-      );
-   }
 
    if (selectedModule) {
       const module = modules.find((m) => m.id === selectedModule);
@@ -388,34 +277,7 @@ export const Learn = () => {
             </span>
          </h1>
 
-         <div className="bg-gradient-to-r from-purple-200 to-pink-200 dark:from-purple-900/30 dark:to-pink-900/30 rounded-md p-2">
-            <div className="bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 rounded-md p-4 flex flex-col md:flex-row justify-between gap-5 shadow-md">
-               <div className="flex gap-2 items-center">
-                  <Type className="h-20 w-20 text-purple-600 hidden sm:block" />
-                  <div>
-                     <h2 className="flex gap-3 items-center text-xl font-bold text-purple-800 dark:text-purple-200">
-                        Fundamentos: Abecedario LSC
-                     </h2>
-                     <p className="text-purple-700 dark:text-purple-300 max-w-sm">
-                        Base esencial para comunicarte en lengua de señas. Siempre
-                        disponible para practicar.
-                     </p>
-                  </div>
-               </div>
-
-               <div className="flex flex-col gap-2 justify-center">
-                  <Button
-                     onClick={() => setShowAlphabet(true)}
-                     className="bg-purple-600 hover:bg-purple-700 text-white w-full"
-                  >
-                     {getAlphabetProgress() > 0 ? <Play /> : <BookOpen />}
-                     {getAlphabetProgress() > 0
-                        ? "Continuar Alfabeto"
-                        : "Empezar Alfabeto"}
-                  </Button>
-               </div>
-            </div>
-         </div>
+         <AlphabetSection />
 
          <div className="flex flex-col gap-2">
             <div className="flex justify-between items-center">

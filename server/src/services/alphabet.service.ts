@@ -1,10 +1,25 @@
 import { db } from "../db";
-import { alphabet } from "../db/schema";
+import { alphabet, alphabetProgress } from "../db/schema";
 
 export const alphabetService = {
    getAll: async () => {
       const letters = await db.select().from(alphabet);
 
       return letters;
+   },
+
+   getAllPracticed: async () => {
+      const letters = await db.select().from(alphabetProgress);
+
+      return letters;
+   },
+
+   setLetterComplete: async (letterId: string, userId: string, completed: boolean) => {
+      const letter = await db
+         .insert(alphabetProgress)
+         .values({ letterId: letterId, userId: userId, completed: completed })
+         .returning();
+
+      return letter;
    },
 };

@@ -11,6 +11,7 @@ import { Dashboard } from "./pages/Dashboard";
 import { Profile } from "./pages/Profile";
 import { NotFound } from "./pages/NotFound";
 import { SecureRoute } from "./components/auth/SecureRoute";
+import { Alphabet } from "./pages/Alphabet";
 
 function App() {
    const { isAuth, checkingAuth, checkAuth } = useAuthStore();
@@ -44,6 +45,7 @@ function App() {
                   <Route element={<Default />}>
                      <Route path="/home" element={<Learn />} />
                      <Route path="/:username" element={<Profile />} />
+                     <Route path="/alphabet" element={<Alphabet />} />
                   </Route>
                </Route>
 
