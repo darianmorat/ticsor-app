@@ -2,15 +2,6 @@ import api from "@/api/axios";
 import { toast } from "react-toastify";
 import { create } from "zustand";
 
-type Store = {
-   isLoading: boolean;
-   alphabet: Letter[];
-   practicedLetters: PracticedLetter[];
-   getAlphabet: () => Promise<void>;
-   getPracticedLetters: () => Promise<void>;
-   practiceLetter: (letterId: string, completed: boolean) => Promise<void>;
-};
-
 type Letter = {
    id: string;
    letter: string;
@@ -20,6 +11,15 @@ type Letter = {
 type PracticedLetter = {
    id: string;
    letterId: string;
+};
+
+type Store = {
+   isLoading: boolean;
+   alphabet: Letter[];
+   practicedLetters: PracticedLetter[];
+   getAlphabet: () => Promise<void>;
+   getPracticedLetters: () => Promise<void>;
+   practiceLetter: (letterId: string, completed: boolean) => Promise<void>;
 };
 
 export const useAlphabetStore = create<Store>((set, get) => ({

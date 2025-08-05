@@ -1,105 +1,62 @@
 import { LayoutContainer } from "@/components/layout/Container";
 import { AlphabetSection } from "@/components/learn/alphabetSection";
 import { Button } from "@/components/ui/button";
+import { useModuleStore } from "@/stores/useModuleStore";
 import {
    ArrowLeft,
    Book,
    BookOpen,
-   Brain,
    CheckCircle,
+   Layers,
    Lock,
    Play,
    Target,
-   Users,
 } from "lucide-react";
-import { useState, type JSX } from "react";
+import { useEffect, useState } from "react";
 
-type moduleProps = {
-   id: number;
+type ModuleProps = {
+   id: string;
+   order: number;
    title: string;
-   icon: JSX.Element;
    lessons: Lesson[];
-   completed: boolean;
 };
 
 type Lesson = {
-   id: number;
+   id: string;
+   order: number;
    title: string;
-   type: string; // video, activity, game
-   completed: boolean;
-};
-
-type UserProgress = {
-   completedLessons: number[];
+   type: string;
 };
 
 export const Learn = () => {
-   const [selectedModule, setSelectedModule] = useState(null);
-   const [userProgress, setUserProgress] = useState<UserProgress>({
-      completedLessons: [],
-      // practicedLetters: [],
-   });
+   const { modules, getModules, completedLessons, getCompletedLessons, completeLesson } =
+      useModuleStore();
 
-   const modules = [
-      {
-         id: 1,
-         title: "Abecedario en Lengua de Señas Colombiana (LSC)",
-         icon: <Book />,
-         lessons: [
-            { id: 1, title: "Abecedario", type: "activity", completed: true },
-            { id: 2, title: "Letra B", type: "video", completed: true },
-            { id: 3, title: "Letra C", type: "video", completed: false },
-            { id: 4, title: "Actividad Práctica", type: "activity", completed: false },
-            { id: 5, title: "Juego Interactivo", type: "game", completed: false },
-         ],
-         completed: false,
-      },
-      {
-         id: 2,
-         title: "Modulo de Comprensión Lectora a Nivel Literal",
-         icon: <Users />,
-         lessons: [
-            { id: 6, title: "Introducción", type: "video", completed: false },
-            { id: 7, title: "Ejercicio 1", type: "activity", completed: false },
-            { id: 8, title: "Quiz Literal", type: "game", completed: false },
-         ],
-         completed: false,
-      },
-      {
-         id: 3,
-         title: "Módulo de Comprensión Lectora a Nivel Inferencial",
-         icon: <Brain />,
-         lessons: [
-            { id: 9, title: "Conceptos Básicos", type: "video", completed: false },
-            { id: 10, title: "Práctica Inferencial", type: "activity", completed: false },
-         ],
-         completed: false,
-      },
-      {
-         id: 4,
-         title: "Módulo de Comprensión Lectora a Nivel Crítica",
-         icon: <Target />,
-         lessons: [
-            { id: 11, title: "Análisis Crítico", type: "video", completed: false },
-            { id: 12, title: "Evaluación Final", type: "activity", completed: false },
-         ],
-         completed: false,
-      },
-   ];
+   useEffect(() => {
+      getModules();
+   }, [modules, getModules]);
+
+   useEffect(() => {
+      getCompletedLessons();
+   }, [completedLessons, getCompletedLessons]);
+
+   const [selectedModule, setSelectedModule] = useState<string | null>(null);
 
    // MODULE
-   const getModuleProgress = (module: moduleProps) => {
+   const getModuleProgress = (module: ModuleProps) => {
+      if (module.lessons.length === 0) return 0;
+
       const completedCount = module.lessons.filter((lesson) =>
-         userProgress.completedLessons.includes(lesson.id),
+         completedLessons.some((l) => l.lessonId === lesson.id),
       ).length;
 
       return (completedCount / module.lessons.length) * 100;
    };
 
-   const isModuleUnlocked = (module: moduleProps) => {
-      if (module.id === 1) return true;
+   const isModuleUnlocked = (module: ModuleProps) => {
+      if (module.order === 1) return true;
 
-      const previousModule = modules.find((m) => m.id === module.id - 1);
+      const previousModule = modules.find((m) => m.order === module.order - 1);
       if (!previousModule) return false;
 
       const previousModuleProgress = getModuleProgress(previousModule);
@@ -129,13 +86,12 @@ export const Learn = () => {
       (total, module) => total + module.lessons.length,
       0,
    );
-   const completeLesson = (lessonId: number) => {
-      if (!userProgress.completedLessons.includes(lessonId)) {
-         setUserProgress((prev) => ({
-            ...prev,
-            completedLessons: [...prev.completedLessons, lessonId],
-         }));
-      }
+
+   const handleCompleteLesson = (lessonId: string) => {
+      const alreadyExists = completedLessons.some((l) => l.lessonId === lessonId);
+      if (alreadyExists) return;
+
+      completeLesson(lessonId, true);
    };
 
    if (selectedModule) {
@@ -155,7 +111,7 @@ export const Learn = () => {
                <div className="bg-background rounded-md p-4 flex flex-col gap-5 shadow-md">
                   <div className="flex flex-col gap-4">
                      <div className="flex gap-2">
-                        {module.icon} <p className="font-medium">{module.title}</p>
+                        <Layers /> <p className="font-medium">{module.title}</p>
                      </div>
                      <div className="flex items-center gap-2 mt-2 w-full">
                         <div className="w-full">
@@ -183,10 +139,15 @@ export const Learn = () => {
 
             <div className="space-y-4">
                {module.lessons.map((lesson, index) => {
-                  const isCompleted = userProgress.completedLessons.includes(lesson.id);
+                  const isCompleted = completedLessons.some(
+                     (l) => l.lessonId === lesson.id,
+                  );
+
                   const isAccessible =
                      index === 0 ||
-                     userProgress.completedLessons.includes(module.lessons[index - 1].id);
+                     completedLessons.some(
+                        (l) => l.lessonId === module.lessons[index - 1].id,
+                     );
 
                   return (
                      <div
@@ -238,7 +199,7 @@ export const Learn = () => {
                                  onClick={() =>
                                     !isCompleted &&
                                     isAccessible &&
-                                    completeLesson(lesson.id)
+                                    handleCompleteLesson(lesson.id)
                                  }
                                  disabled={!isAccessible}
                                  className={`w-full ${isCompleted && "bg-green-500 hover:bg-green-600"} ${!isAccessible && "bg-gray-300 text-gray-700 cursor-not-allowed"}`}
@@ -284,9 +245,9 @@ export const Learn = () => {
                <div>
                   <h3 className="text-xl font-medium">Mi progreso:</h3>
                   <p className="text-muted-foreground text-sm">
-                     {userProgress.completedLessons.length < 6 ? (
+                     {completedLessons.length < 6 ? (
                         <>Suerte!</>
-                     ) : userProgress.completedLessons.length < 12 ? (
+                     ) : completedLessons.length < 12 ? (
                         <>Te falta poco!</>
                      ) : (
                         <>Lo lograste!</>
@@ -295,16 +256,16 @@ export const Learn = () => {
                </div>
                <div className="flext flex-col gap-2 text-end">
                   <p className="text-xl font-medium ">
-                     {userProgress.completedLessons.length}/{totalLesssons}
+                     {completedLessons.length}/{totalLesssons}
                   </p>
                   <p className="text-muted-foreground text-sm">Lecciones completas</p>
                </div>
             </div>
             <div className="w-full bg-gray-200 dark:bg-gray-200/20 rounded-full h-4">
                <div
-                  className={`${userProgress.completedLessons.length === 12 ? "bg-green-500" : "bg-gradient-to-r from-blue-500 to-green-500"} h-4 rounded-full transition-all duration-500`}
+                  className={`${completedLessons.length === 12 ? "bg-green-500" : "bg-gradient-to-r from-blue-500 to-green-500"} h-4 rounded-full transition-all duration-500`}
                   style={{
-                     width: `${(userProgress.completedLessons.length / 12) * 100}%`,
+                     width: `${(completedLessons.length / 12) * 100}%`,
                   }}
                ></div>
             </div>
@@ -322,7 +283,7 @@ export const Learn = () => {
                   >
                      <div className="bg-background rounded-md p-4 flex flex-col gap-5 shadow-md">
                         <div className="flex gap-2">
-                           {module.icon} <p className="font-medium">{module.title}</p>
+                           <Layers /> <p className="font-medium">{module.title}</p>
                         </div>
 
                         <div className="">
