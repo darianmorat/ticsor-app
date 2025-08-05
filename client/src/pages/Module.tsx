@@ -29,12 +29,17 @@ type Lesson = {
 };
 
 export const Module = () => {
-   const { modules, getModules, completedLessons, completeLesson } = useModuleStore();
+   const { modules, getModules, completedLessons, completeLesson, getCompletedLessons } =
+      useModuleStore();
    const navigate = useNavigate();
 
    useEffect(() => {
       getModules();
-   }, [modules, getModules]);
+   }, [getModules]);
+
+   useEffect(() => {
+      getCompletedLessons();
+   }, [completedLessons, getCompletedLessons]);
 
    const { moduleId } = useParams();
    if (!moduleId) return;

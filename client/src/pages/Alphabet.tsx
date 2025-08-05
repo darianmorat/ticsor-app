@@ -20,7 +20,7 @@ export const Alphabet = () => {
 
    useEffect(() => {
       getPracticedLetters();
-   }, [practicedLetters, getPracticedLetters, practiceLetter]);
+   }, [practicedLetters, getPracticedLetters]);
 
    const practiceAlphabetLetter = (letterId: string) => {
       const alreadyExists = practicedLetters.some((l) => l.letterId === letterId);
