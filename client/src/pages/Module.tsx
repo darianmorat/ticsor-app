@@ -1,5 +1,6 @@
 import { LayoutContainer } from "@/components/layout/Container";
 import { Button } from "@/components/ui/button";
+import { useAuthStore } from "@/stores/useAuthStore";
 import { useModuleStore } from "@/stores/useModuleStore";
 import {
    ArrowLeft,
@@ -31,6 +32,7 @@ type Lesson = {
 export const Module = () => {
    const { modules, getModules, completedLessons, completeLesson, getCompletedLessons } =
       useModuleStore();
+   const { user } = useAuthStore();
    const navigate = useNavigate();
 
    useEffect(() => {
@@ -39,7 +41,9 @@ export const Module = () => {
 
    useEffect(() => {
       getCompletedLessons();
-   }, [completedLessons, getCompletedLessons]);
+   }, [completedLessons]);
+
+   const userCompletedLessons = completedLessons.filter((l) => l.userId === user?.id);
 
    const { moduleId } = useParams();
    if (!moduleId) return;
@@ -52,7 +56,7 @@ export const Module = () => {
       if (module.lessons.length === 0) return 0;
 
       const completedCount = module.lessons.filter((lesson) =>
-         completedLessons.some((l) => l.lessonId === lesson.id),
+         userCompletedLessons.some((l) => l.lessonId === lesson.id),
       ).length;
 
       return (completedCount / module.lessons.length) * 100;
@@ -78,7 +82,7 @@ export const Module = () => {
    };
 
    const handleCompleteLesson = (lessonId: string) => {
-      const alreadyExists = completedLessons.some((l) => l.lessonId === lessonId);
+      const alreadyExists = userCompletedLessons.some((l) => l.lessonId === lessonId);
       if (alreadyExists) return;
 
       completeLesson(lessonId, true);
@@ -87,7 +91,7 @@ export const Module = () => {
    return (
       <LayoutContainer>
          <button
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/home")}
             className="mb-6 text-blue-600 hover:text-blue-800 font-medium flex items-center gap-2"
          >
             <ArrowLeft className="w-4 h-4" /> Volver al inicio
@@ -125,11 +129,13 @@ export const Module = () => {
 
          <div className="space-y-4">
             {module.lessons.map((lesson, index) => {
-               const isCompleted = completedLessons.some((l) => l.lessonId === lesson.id);
+               const isCompleted = userCompletedLessons.some(
+                  (l) => l.lessonId === lesson.id,
+               );
 
                const isAccessible =
                   index === 0 ||
-                  completedLessons.some(
+                  userCompletedLessons.some(
                      (l) => l.lessonId === module.lessons[index - 1].id,
                   );
 
@@ -141,7 +147,7 @@ export const Module = () => {
                            ? "border-green-500"
                            : isAccessible
                              ? "border-blue-500"
-                             : "border-gray-300"
+                             : "border-gray-300 dark:border-gray-300/50"
                      }`}
                   >
                      <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">

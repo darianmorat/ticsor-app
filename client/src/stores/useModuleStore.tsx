@@ -18,6 +18,7 @@ type Lesson = {
 
 type CompletedLesson = {
    id: string;
+   userId: string;
    lessonId: string;
 };
 

@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import api from "@/api/axios";
 
 type User = {
+   id: string;
    name: string;
    username: string;
    email: string;

@@ -1,6 +1,7 @@
 import { LayoutContainer } from "@/components/layout/Container";
 import { Button } from "@/components/ui/button";
 import { useAlphabetStore } from "@/stores/useAlphabetStore";
+import { useAuthStore } from "@/stores/useAuthStore";
 import { ArrowLeft, BookOpen, CheckCircle } from "lucide-react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +14,7 @@ export const Alphabet = () => {
       practiceLetter,
       getPracticedLetters,
    } = useAlphabetStore();
+   const { user } = useAuthStore();
 
    useEffect(() => {
       getAlphabet();
@@ -20,17 +22,19 @@ export const Alphabet = () => {
 
    useEffect(() => {
       getPracticedLetters();
-   }, [practicedLetters, getPracticedLetters]);
+   }, [practicedLetters]);
+
+   const userPracticedLetters = practicedLetters.filter((l) => l.userId === user?.id);
 
    const practiceAlphabetLetter = (letterId: string) => {
-      const alreadyExists = practicedLetters.some((l) => l.letterId === letterId);
+      const alreadyExists = userPracticedLetters.some((l) => l.letterId === letterId);
       if (alreadyExists) return;
 
       practiceLetter(letterId, true);
    };
 
    const getAlphabetProgress = () => {
-      return (practicedLetters.length / alphabet.length) * 100;
+      return (userPracticedLetters.length / alphabet.length) * 100;
    };
 
    const navigate = useNavigate();
@@ -38,7 +42,7 @@ export const Alphabet = () => {
    return (
       <LayoutContainer>
          <button
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/home")}
             className="mb-6 text-blue-600 hover:text-blue-800 font-medium flex items-center gap-2"
          >
             <ArrowLeft className="w-4 h-4" /> Volver al inicio
@@ -49,9 +53,9 @@ export const Alphabet = () => {
                <div>
                   <h3 className="text-xl font-medium">Mi progreso:</h3>
                   <p className="text-muted-foreground text-sm">
-                     {practicedLetters.length < 6 ? (
+                     {userPracticedLetters.length < 6 ? (
                         <>Suerte!</>
-                     ) : practicedLetters.length < 26 ? (
+                     ) : userPracticedLetters.length < 26 ? (
                         <>Te falta poco!</>
                      ) : (
                         <>Lo lograste!</>
@@ -60,14 +64,14 @@ export const Alphabet = () => {
                </div>
                <div className="flext flex-col gap-2 text-end">
                   <p className="text-xl font-medium">
-                     {practicedLetters.length}/{alphabet.length}
+                     {userPracticedLetters.length}/{alphabet.length}
                   </p>
                   <p className="text-muted-foreground text-sm">Letras completas</p>
                </div>
             </div>
             <div className="w-full bg-gray-200 dark:bg-gray-200/20 rounded-full h-4">
                <div
-                  className={`${practicedLetters.length === alphabet.length ? "bg-green-500" : "bg-gradient-to-r from-purple-500 to-green-500"} h-4 rounded-full transition-all duration-500`}
+                  className={`${userPracticedLetters.length === alphabet.length ? "bg-green-500" : "bg-gradient-to-r from-purple-500 to-green-500"} h-4 rounded-full transition-all duration-500`}
                   style={{
                      width: `${getAlphabetProgress()}%`,
                   }}
@@ -77,7 +81,9 @@ export const Alphabet = () => {
 
          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {alphabet.map((letter) => {
-               const isPracticed = practicedLetters.some((l) => l.letterId === letter.id);
+               const isPracticed = userPracticedLetters.some(
+                  (l) => l.letterId === letter.id,
+               );
 
                return (
                   <div

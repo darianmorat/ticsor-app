@@ -10,6 +10,7 @@ type Letter = {
 
 type PracticedLetter = {
    id: string;
+   userId: string;
    letterId: string;
 };
 
