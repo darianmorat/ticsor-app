@@ -3,23 +3,23 @@ import { alphabet, alphabetProgress } from "../db/schema";
 
 export const alphabetService = {
    getAll: async () => {
-      const letters = await db.select().from(alphabet);
+      const result = await db.select().from(alphabet);
 
-      return letters;
+      return result;
    },
 
-   getAllPracticed: async () => {
-      const letters = await db.select().from(alphabetProgress);
+   getAllCompleted: async () => {
+      const result = await db.select().from(alphabetProgress);
 
-      return letters;
+      return result;
    },
 
-   setLetterComplete: async (letterId: string, userId: string) => {
-      const letter = await db
+   addCompleted: async (letterId: string, userId: string) => {
+      const result = await db
          .insert(alphabetProgress)
          .values({ letterId: letterId, userId: userId })
          .returning();
 
-      return letter;
+      return result;
    },
 };

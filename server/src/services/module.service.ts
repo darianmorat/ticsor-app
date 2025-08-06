@@ -3,27 +3,27 @@ import { lessonProgress } from "../db/schema";
 
 export const moduleService = {
    getAll: async () => {
-      const res = await db.query.modules.findMany({
+      const result = await db.query.modules.findMany({
          with: {
             lessons: true,
          },
       });
 
-      return res;
+      return result;
    },
 
    getAllCompletedLesson: async () => {
-      const lessons = await db.select().from(lessonProgress);
+      const result = await db.select().from(lessonProgress);
 
-      return lessons;
+      return result;
    },
 
    setLessonComplete: async (lessonId: string, userId: string) => {
-      const lesson = await db
+      const result = await db
          .insert(lessonProgress)
          .values({ lessonId: lessonId, userId: userId })
          .returning();
 
-      return lesson;
+      return result;
    },
 };

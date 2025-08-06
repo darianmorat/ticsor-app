@@ -5,7 +5,7 @@ import { genSalt, hash } from "bcrypt-ts";
 
 export const userService = {
    findForAuth: async (email: string) => {
-      const [user] = await db
+      const [result] = await db
          .select({
             id: users.id,
             password: users.password,
@@ -14,17 +14,17 @@ export const userService = {
          .where(eq(users.email, email))
          .limit(1);
 
-      return user;
+      return result;
    },
 
    findById: async (id: string) => {
-      const [user] = await db.select().from(users).where(eq(users.id, id)).limit(1);
+      const [result] = await db.select().from(users).where(eq(users.id, id)).limit(1);
 
-      return user;
+      return result;
    },
 
    find: async (username: string) => {
-      const user = await db.query.users.findFirst({
+      const result = await db.query.users.findFirst({
          where: eq(users.username, username),
          with: {
             alphabetProgress: true,
@@ -32,17 +32,17 @@ export const userService = {
          },
       });
 
-      return user;
+      return result;
    },
 
    findAll: async () => {
-      const allUsers = await db.select().from(users);
+      const result = await db.select().from(users);
 
-      return allUsers;
+      return result;
    },
 
    exists: async (email: string, username: string) => {
-      const [user] = await db
+      const [result] = await db
          .select({
             email: users.email,
             username: users.username,
@@ -51,19 +51,19 @@ export const userService = {
          .where(or(eq(users.email, email), eq(users.username, username)))
          .limit(1);
 
-      return user;
+      return result;
    },
 
    create: async (name: string, username: string, email: string, password: string) => {
       const salt = await genSalt(10);
       const hashedPassword = await hash(password, salt);
 
-      const [user] = await db
+      const [result] = await db
          .insert(users)
          .values({ name, username, email, password: hashedPassword })
          .returning();
 
-      return user;
+      return result;
    },
 
    edit: async (
@@ -76,18 +76,18 @@ export const userService = {
       const salt = await genSalt(10);
       const hashedPassword = await hash(password, salt);
 
-      const [user] = await db
+      const [result] = await db
          .update(users)
          .set({ name, username, email, password: hashedPassword })
          .where(eq(users.id, id))
          .returning();
 
-      return user;
+      return result;
    },
 
    delete: async (id: string) => {
-      const [user] = await db.delete(users).where(eq(users.id, id)).returning();
+      const [result] = await db.delete(users).where(eq(users.id, id)).returning();
 
-      return user;
+      return result;
    },
 };

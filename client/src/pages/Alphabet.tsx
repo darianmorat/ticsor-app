@@ -9,28 +9,28 @@ import { useNavigate } from "react-router-dom";
 export const Alphabet = () => {
    const {
       alphabet,
+      completedAlphabet,
       getAlphabet,
-      practicedLetters,
-      practiceLetter,
-      getPracticedLetters,
+      getCompletedAlphabet,
+      // addCompletedLetter,
    } = useAlphabetStore();
    const { user } = useAuthStore();
 
    useEffect(() => {
       getAlphabet();
-      getPracticedLetters();
+      getCompletedAlphabet();
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
-   const userPracticedLetters = practicedLetters.filter((l) => l.userId === user?.id);
+   const userPracticedLetters = completedAlphabet.filter((l) => l.userId === user?.id);
 
-   const practiceAlphabetLetter = async (letterId: string) => {
-      const alreadyExists = userPracticedLetters.some((l) => l.letterId === letterId);
-      if (alreadyExists) return;
-
-      await practiceLetter(letterId);
-      await getPracticedLetters();
-   };
+   // const practiceAlphabetLetter = async (letterId: string) => {
+   //    const alreadyExists = userPracticedLetters.some((l) => l.letterId === letterId);
+   //    if (alreadyExists) return;
+   //
+   //    await addCompletedLetter(letterId);
+   //    await getCompletedAlphabet();
+   // };
 
    const getAlphabetProgress = () => {
       return (userPracticedLetters.length / alphabet.length) * 100;

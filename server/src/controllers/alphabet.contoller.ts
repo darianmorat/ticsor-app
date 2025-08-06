@@ -4,11 +4,11 @@ import { AuthRequest } from "../types/auth";
 
 export const getAlphabet = async (_req: Request, res: Response) => {
    try {
-      const letters = await alphabetService.getAll();
+      const result = await alphabetService.getAll();
 
       res.status(200).json({
          success: true,
-         letters: letters,
+         letters: result,
       });
    } catch {
       res.status(500).json({
@@ -18,13 +18,13 @@ export const getAlphabet = async (_req: Request, res: Response) => {
    }
 };
 
-export const getPracticedLetters = async (_req: Request, res: Response) => {
+export const getCompletedAlphabet = async (_req: Request, res: Response) => {
    try {
-      const letters = await alphabetService.getAllPracticed();
+      const result = await alphabetService.getAllCompleted();
 
       res.status(200).json({
          success: true,
-         letters: letters,
+         letters: result,
       });
    } catch {
       res.status(500).json({
@@ -34,16 +34,16 @@ export const getPracticedLetters = async (_req: Request, res: Response) => {
    }
 };
 
-export const setComplete = async (req: AuthRequest, res: Response) => {
+export const addCompletedLetter = async (req: AuthRequest, res: Response) => {
    try {
       const { letterId } = req.body;
       const { userId } = req.user;
 
-      const newLetter = await alphabetService.setLetterComplete(letterId, userId);
+      const result = await alphabetService.addCompleted(letterId, userId);
 
       res.status(200).json({
          success: true,
-         newLetter: newLetter,
+         letter: result,
       });
    } catch {
       res.status(500).json({

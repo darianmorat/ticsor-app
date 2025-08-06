@@ -5,18 +5,18 @@ import { useAlphabetStore } from "@/stores/useAlphabetStore";
 import { useNavigate } from "react-router-dom";
 
 export const AlphabetSection = () => {
-   const { alphabet, getAlphabet, practicedLetters, getPracticedLetters } =
+   const { alphabet, completedAlphabet, getAlphabet, getCompletedAlphabet } =
       useAlphabetStore();
    const navigate = useNavigate();
 
    useEffect(() => {
       getAlphabet();
-      getPracticedLetters();
+      getCompletedAlphabet();
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
    const getAlphabetProgress = () => {
-      return (practicedLetters.length / alphabet.length) * 100;
+      return (completedAlphabet.length / alphabet.length) * 100;
    };
 
    return (

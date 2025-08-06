@@ -23,7 +23,7 @@ type CompletedLesson = {
 };
 
 type Store = {
-   isLoading: boolean;
+   isLoading: boolean; // Not used for now
    modules: Module[];
    completedLessons: CompletedLesson[];
    getModules: () => Promise<void>;

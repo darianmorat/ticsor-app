@@ -8,25 +8,25 @@ type Letter = {
    videoUrl: string;
 };
 
-type PracticedLetter = {
+type CompletedLetter = {
    id: string;
    userId: string;
    letterId: string;
 };
 
 type Store = {
-   isLoading: boolean; // Not used
+   isLoading: boolean; // Not used for now
    alphabet: Letter[];
-   practicedLetters: PracticedLetter[];
+   completedAlphabet: CompletedLetter[];
    getAlphabet: () => Promise<void>;
-   getPracticedLetters: () => Promise<void>;
-   practiceLetter: (letterId: string) => Promise<void>;
+   getCompletedAlphabet: () => Promise<void>;
+   addCompletedLetter: (letterId: string) => Promise<void>;
 };
 
 export const useAlphabetStore = create<Store>((set, get) => ({
    isLoading: false,
    alphabet: [],
-   practicedLetters: [],
+   completedAlphabet: [],
 
    getAlphabet: async () => {
       set({ isLoading: true });
@@ -43,13 +43,13 @@ export const useAlphabetStore = create<Store>((set, get) => ({
       }
    },
 
-   getPracticedLetters: async () => {
+   getCompletedAlphabet: async () => {
       set({ isLoading: true });
       try {
          const res = await api.get("/alphabet/get-all-completed");
 
          if (res.data.success) {
-            set({ practicedLetters: res.data.letters });
+            set({ completedAlphabet: res.data.letters });
          }
       } catch (error) {
          toast.error(error.response.data.message);
@@ -58,19 +58,19 @@ export const useAlphabetStore = create<Store>((set, get) => ({
       }
    },
 
-   practiceLetter: async (letterId) => {
+   addCompletedLetter: async (letterId) => {
       set({ isLoading: true });
       try {
          const body = {
             letterId: letterId,
          };
 
-         const res = await api.post("/alphabet/set-complete", body);
+         const res = await api.post("/alphabet/add-completed", body);
 
          if (res.data.success) {
-            const currentLetters = get().practicedLetters;
-            const newLetter = res.data.newLetter;
-            set({ practicedLetters: [...currentLetters, newLetter] });
+            const currentLetters = get().completedAlphabet;
+            const newLetter = res.data.letter;
+            set({ completedAlphabet: [...currentLetters, newLetter] });
          }
       } catch (error) {
          toast.error(error.response.data.message);
