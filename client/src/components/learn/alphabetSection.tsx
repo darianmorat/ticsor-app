@@ -22,8 +22,8 @@ export const AlphabetSection = () => {
    return (
       <div className="bg-gradient-to-r from-purple-200 to-pink-200 dark:from-purple-900/30 dark:to-pink-900/30 rounded-md p-2">
          <div className="bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 rounded-md p-4 flex flex-col md:flex-row justify-between gap-5 shadow-md">
-            <div className="flex gap-2 items-center">
-               <Type className="h-20 w-20 text-purple-600 hidden sm:block" />
+            <div className="flex gap-4 items-center">
+               <Type className="h-20 w-20 text-purple-600 hidden sm:block bg-purple-300/60 dark:bg-purple-700/20 rounded-md" />
                <div>
                   <h2 className="flex gap-3 items-center text-xl font-bold text-purple-800 dark:text-purple-200">
                      Fundamentos: Abecedario LSC

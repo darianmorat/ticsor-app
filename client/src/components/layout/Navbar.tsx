@@ -51,9 +51,9 @@ export const Navbar = () => {
                         )}
                         <DropdownMenu>
                            <DropdownMenuTrigger asChild>
-                              <Avatar className="h-full w-9 cursor-pointer">
+                              <Avatar className="h-full w-9 cursor-pointer shadow-xs">
                                  <AvatarImage src="" />
-                                 <AvatarFallback className="bg-blue-200/80 text-blue-600 text-xl pb-0.5">
+                                 <AvatarFallback className="bg-background hover:bg-accent dark:bg-input/30 border dark:border-input">
                                     {shortUserName}
                                  </AvatarFallback>
                               </Avatar>

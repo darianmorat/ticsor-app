@@ -17,4 +17,8 @@ export const LayoutContainer: React.FC<ContainerProps> = ({
    children,
    className,
    size = "medium",
-}) => <div className={cn(sizeVariants[size], "mx-auto p-4", className)}>{children}</div>;
+}) => (
+   <div className={cn(sizeVariants[size], "mx-auto w-full p-4", className)}>
+      {children}
+   </div>
+);

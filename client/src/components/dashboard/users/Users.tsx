@@ -52,7 +52,7 @@ export const Users = () => {
             <table className="min-w-full text-left">
                <thead className="bg-accent uppercase text-xs">
                   <tr>
-                     <th className="px-6 py-3 min-w-fit">Aprendices</th>
+                     <th className="px-6 py-3 min-w-fit">Usuarios</th>
                      <th className="px-6 py-3 min-w-fit">Creación</th>
                      <th className="px-6 py-3 min-w-sm text-right">Acciones</th>
                   </tr>

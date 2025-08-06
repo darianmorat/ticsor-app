@@ -83,20 +83,20 @@ export const Module = () => {
       const alreadyExists = userCompletedLessons.some((l) => l.lessonId === lessonId);
       if (alreadyExists) return;
 
-      await completeLesson(lessonId, true);
+      await completeLesson(lessonId);
       await getCompletedLessons();
    };
 
    return (
-      <LayoutContainer>
+      <LayoutContainer className="flex-1 flex flex-col gap-4">
          <button
             onClick={() => navigate("/home")}
-            className="mb-6 text-blue-600 hover:text-blue-800 font-medium flex items-center gap-2"
+            className="text-blue-600 hover:text-blue-800 font-medium flex items-center gap-2"
          >
             <ArrowLeft className="w-4 h-4" /> Volver al inicio
          </button>
 
-         <div className="bg-gray-200 dark:bg-gray-200/30 rounded-md p-2 mb-8">
+         <div className="bg-gray-200 dark:bg-gray-200/30 rounded-md p-2">
             <div className="bg-background rounded-md p-4 flex flex-col gap-5 shadow-md">
                <div className="flex flex-col gap-4">
                   <div className="flex gap-2">
