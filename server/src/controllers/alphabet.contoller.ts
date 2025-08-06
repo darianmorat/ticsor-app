@@ -36,14 +36,10 @@ export const getPracticedLetters = async (_req: Request, res: Response) => {
 
 export const setComplete = async (req: AuthRequest, res: Response) => {
    try {
-      const { letterId, completed } = req.body;
+      const { letterId } = req.body;
       const { userId } = req.user;
 
-      const newLetter = await alphabetService.setLetterComplete(
-         letterId,
-         userId,
-         completed,
-      );
+      const newLetter = await alphabetService.setLetterComplete(letterId, userId);
 
       res.status(200).json({
          success: true,

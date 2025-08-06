@@ -2,10 +2,6 @@ import api from "@/api/axios";
 import { toast } from "react-toastify";
 import { create } from "zustand";
 
-// PENDING:
-// WE ARE NOT USING THE LOADING VARIABLE HERE, SHOULD I CALL IT IN THE APP.JSX OR SHOULD
-// I CALL IT IN THE PLACE WHERE IS USED AND THEN CALL THE LOADIND COMPONENT?
-
 type Letter = {
    id: string;
    letter: string;
@@ -24,7 +20,7 @@ type Store = {
    practicedLetters: PracticedLetter[];
    getAlphabet: () => Promise<void>;
    getPracticedLetters: () => Promise<void>;
-   practiceLetter: (letterId: string, completed: boolean) => Promise<void>;
+   practiceLetter: (letterId: string) => Promise<void>;
 };
 
 export const useAlphabetStore = create<Store>((set, get) => ({
@@ -62,12 +58,11 @@ export const useAlphabetStore = create<Store>((set, get) => ({
       }
    },
 
-   practiceLetter: async (letterId, completed) => {
+   practiceLetter: async (letterId) => {
       set({ isLoading: true });
       try {
          const body = {
             letterId: letterId,
-            completed: completed,
          };
 
          const res = await api.post("/alphabet/set-complete", body);

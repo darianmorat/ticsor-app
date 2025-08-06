@@ -1,5 +1,8 @@
 import { uuid, timestamp, varchar, pgTable } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
+import { relations } from "drizzle-orm";
+import { alphabetProgress } from "./alphabet";
+import { lessonProgress } from "./lessons";
 
 export const users = pgTable("users", {
    id: uuid("id")
@@ -12,3 +15,8 @@ export const users = pgTable("users", {
    role: varchar({ length: 20 }).notNull().default("user"),
    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
+
+export const userRelations = relations(users, ({ many }) => ({
+   alphabetProgress: many(alphabetProgress),
+   lessonProgress: many(lessonProgress),
+}));

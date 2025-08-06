@@ -28,7 +28,7 @@ type Store = {
    completedLessons: CompletedLesson[];
    getModules: () => Promise<void>;
    getCompletedLessons: () => Promise<void>;
-   completeLesson: (letterId: string, completed: boolean) => Promise<void>;
+   completeLesson: (letterId: string) => Promise<void>;
 };
 
 export const useModuleStore = create<Store>((set, get) => ({
@@ -66,12 +66,11 @@ export const useModuleStore = create<Store>((set, get) => ({
       }
    },
 
-   completeLesson: async (lessonId, completed) => {
+   completeLesson: async (lessonId) => {
       set({ isLoading: true });
       try {
          const body = {
             lessonId: lessonId,
-            completed: completed,
          };
 
          const res = await api.post("/module/set-complete-lesson", body);

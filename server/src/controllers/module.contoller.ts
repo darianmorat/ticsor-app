@@ -36,14 +36,10 @@ export const getPracticedLessons = async (_req: Request, res: Response) => {
 
 export const setCompleteLesson = async (req: AuthRequest, res: Response) => {
    try {
-      const { lessonId, completed } = req.body;
+      const { lessonId } = req.body;
       const { userId } = req.user;
 
-      const newLesson = await moduleService.setLessonComplete(
-         lessonId,
-         userId,
-         completed,
-      );
+      const newLesson = await moduleService.setLessonComplete(lessonId, userId);
 
       res.status(200).json({
          success: true,

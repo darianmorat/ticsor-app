@@ -14,10 +14,10 @@ export const alphabetService = {
       return letters;
    },
 
-   setLetterComplete: async (letterId: string, userId: string, completed: boolean) => {
+   setLetterComplete: async (letterId: string, userId: string) => {
       const letter = await db
          .insert(alphabetProgress)
-         .values({ letterId: letterId, userId: userId, completed: completed })
+         .values({ letterId: letterId, userId: userId })
          .returning();
 
       return letter;

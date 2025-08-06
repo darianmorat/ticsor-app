@@ -18,10 +18,10 @@ export const moduleService = {
       return lessons;
    },
 
-   setLessonComplete: async (lessonId: string, userId: string, completed: boolean) => {
+   setLessonComplete: async (lessonId: string, userId: string) => {
       const lesson = await db
          .insert(lessonProgress)
-         .values({ lessonId: lessonId, userId: userId, completed: completed })
+         .values({ lessonId: lessonId, userId: userId })
          .returning();
 
       return lesson;

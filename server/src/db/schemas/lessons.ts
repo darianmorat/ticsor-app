@@ -1,4 +1,4 @@
-import { uuid, varchar, pgTable, integer, boolean } from "drizzle-orm/pg-core";
+import { uuid, varchar, pgTable, integer } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { users } from "./users";
 import { modules } from "./modules";
@@ -26,5 +26,16 @@ export const lessonRelations = relations(lessons, ({ one }) => ({
    module: one(modules, {
       fields: [lessons.moduleId],
       references: [modules.id],
+   }),
+}));
+
+export const lessonProgressRelations = relations(lessonProgress, ({ one }) => ({
+   user: one(users, {
+      fields: [lessonProgress.userId],
+      references: [users.id],
+   }),
+   lesson: one(lessons, {
+      fields: [lessonProgress.lessonId],
+      references: [lessons.id],
    }),
 }));

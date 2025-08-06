@@ -9,6 +9,20 @@ type User = {
    email: string;
    role: "admin" | "user";
    createdAt: string;
+   alphabetProgress: PracticedLetter[];
+   lessonProgress: CompletedLesson[];
+};
+
+type PracticedLetter = {
+   id: string;
+   userId: string;
+   letterId: string;
+};
+
+type CompletedLesson = {
+   id: string;
+   userId: string;
+   lessonId: string;
 };
 
 type Store = {
@@ -49,6 +63,7 @@ export const useUserStore = create<Store>((set, get) => ({
 
          if (res.data.success) {
             set({ userProfile: res.data.user });
+            console.log(res.data.user);
          }
       } catch (_error) {
          set({ notFound: true });

@@ -24,11 +24,13 @@ export const userService = {
    },
 
    find: async (username: string) => {
-      const [user] = await db
-         .select()
-         .from(users)
-         .where(eq(users.username, username))
-         .limit(1);
+      const user = await db.query.users.findFirst({
+         where: eq(users.username, username),
+         with: {
+            alphabetProgress: true,
+            lessonProgress: true,
+         },
+      });
 
       return user;
    },

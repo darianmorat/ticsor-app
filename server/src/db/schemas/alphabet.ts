@@ -1,6 +1,7 @@
 import { uuid, varchar, pgTable, char } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { users } from "./users";
+import { relations } from "drizzle-orm";
 
 export const alphabet = pgTable("alphabet", {
    id: uuid("id")
@@ -17,3 +18,10 @@ export const alphabetProgress = pgTable("alphabet_progress", {
    userId: uuid("user_id").references(() => users.id),
    letterId: uuid("letter_id").references(() => alphabet.id),
 });
+
+export const alphabetProgressRelations = relations(alphabetProgress, ({ one }) => ({
+   user: one(users, {
+      fields: [alphabetProgress.userId],
+      references: [users.id],
+   }),
+}));
