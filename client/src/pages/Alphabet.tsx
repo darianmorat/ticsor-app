@@ -28,7 +28,7 @@ export const Alphabet = () => {
       const alreadyExists = userPracticedLetters.some((l) => l.letterId === letterId);
       if (alreadyExists) return;
 
-      await practiceLetter(letterId, true);
+      await practiceLetter(letterId);
       await getPracticedLetters();
    };
 
@@ -39,15 +39,15 @@ export const Alphabet = () => {
    const navigate = useNavigate();
 
    return (
-      <LayoutContainer>
+      <LayoutContainer className="flex-1 flex flex-col gap-4">
          <button
             onClick={() => navigate("/home")}
-            className="mb-6 text-blue-600 hover:text-blue-800 font-medium flex items-center gap-2"
+            className="text-blue-600 hover:text-blue-800 font-medium flex items-center gap-2"
          >
             <ArrowLeft className="w-4 h-4" /> Volver al inicio
          </button>
 
-         <div className="flex flex-col gap-2 mb-8">
+         <div className="flex flex-col gap-2 mb-4">
             <div className="flex justify-between items-center">
                <div>
                   <h3 className="text-xl font-medium">Mi progreso:</h3>
@@ -78,7 +78,7 @@ export const Alphabet = () => {
             </div>
          </div>
 
-         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
             {alphabet.map((letter) => {
                const isPracticed = userPracticedLetters.some(
                   (l) => l.letterId === letter.id,
@@ -101,7 +101,8 @@ export const Alphabet = () => {
                         </div>
 
                         <Button
-                           onClick={() => practiceAlphabetLetter(letter.id)}
+                           // onClick={() => practiceAlphabetLetter(letter.id)}
+                           onClick={() => navigate(`/alphabet/${letter.letter}`)}
                            size="sm"
                            className={`w-full ${
                               isPracticed

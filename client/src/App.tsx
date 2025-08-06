@@ -13,6 +13,7 @@ import { NotFound } from "./pages/NotFound";
 import { SecureRoute } from "./components/auth/SecureRoute";
 import { Alphabet } from "./pages/Alphabet";
 import { Module } from "./pages/Module";
+import { LetterLesson } from "./pages/Letter";
 
 function App() {
    const { isAuth, checkingAuth, checkAuth } = useAuthStore();
@@ -47,6 +48,7 @@ function App() {
                      <Route path="/home" element={<Learn />} />
                      <Route path="/:username" element={<Profile />} />
                      <Route path="/alphabet" element={<Alphabet />} />
+                     <Route path="/alphabet/:letter" element={<LetterLesson />} />
                      <Route path="/module/:moduleId" element={<Module />} />
                   </Route>
                </Route>
