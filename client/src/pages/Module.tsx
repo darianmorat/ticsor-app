@@ -30,8 +30,13 @@ type Lesson = {
 };
 
 export const Module = () => {
-   const { modules, getModules, completedLessons, completeLesson, getCompletedLessons } =
-      useModuleStore();
+   const {
+      modules,
+      completedLessons,
+      getModules,
+      getCompletedLessons,
+      addCompletedLesson,
+   } = useModuleStore();
    const { user } = useAuthStore();
    const navigate = useNavigate();
 
@@ -83,7 +88,7 @@ export const Module = () => {
       const alreadyExists = userCompletedLessons.some((l) => l.lessonId === lessonId);
       if (alreadyExists) return;
 
-      await completeLesson(lessonId);
+      await addCompletedLesson(lessonId);
       await getCompletedLessons();
    };
 

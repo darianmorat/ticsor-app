@@ -2,13 +2,6 @@ import api from "@/api/axios";
 import { toast } from "react-toastify";
 import { create } from "zustand";
 
-type Module = {
-   id: string;
-   order: number;
-   title: string;
-   lessons: Lesson[];
-};
-
 type Lesson = {
    id: string;
    order: number;
@@ -22,13 +15,20 @@ type CompletedLesson = {
    lessonId: string;
 };
 
+type Module = {
+   id: string;
+   order: number;
+   title: string;
+   lessons: Lesson[];
+};
+
 type Store = {
    isLoading: boolean; // Not used for now
    modules: Module[];
    completedLessons: CompletedLesson[];
    getModules: () => Promise<void>;
    getCompletedLessons: () => Promise<void>;
-   completeLesson: (letterId: string) => Promise<void>;
+   addCompletedLesson: (letterId: string) => Promise<void>;
 };
 
 export const useModuleStore = create<Store>((set, get) => ({
@@ -54,7 +54,7 @@ export const useModuleStore = create<Store>((set, get) => ({
    getCompletedLessons: async () => {
       set({ isLoading: true });
       try {
-         const res = await api.get("/module/get-all-completed-lessons");
+         const res = await api.get("/lesson/get-all-completed");
 
          if (res.data.success) {
             set({ completedLessons: res.data.lessons });
@@ -66,18 +66,18 @@ export const useModuleStore = create<Store>((set, get) => ({
       }
    },
 
-   completeLesson: async (lessonId) => {
+   addCompletedLesson: async (lessonId) => {
       set({ isLoading: true });
       try {
          const body = {
             lessonId: lessonId,
          };
 
-         const res = await api.post("/module/set-complete-lesson", body);
+         const res = await api.post("/lesson/add-completed", body);
 
          if (res.data.success) {
             const currentLessons = get().completedLessons;
-            const newLesson = res.data.newLesson;
+            const newLesson = res.data.lesson;
             set({ completedLessons: [...currentLessons, newLesson] });
          }
       } catch (error) {

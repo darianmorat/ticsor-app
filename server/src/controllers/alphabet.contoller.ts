@@ -4,11 +4,11 @@ import { AuthRequest } from "../types/auth";
 
 export const getAlphabet = async (_req: Request, res: Response) => {
    try {
-      const result = await alphabetService.getAll();
+      const letters = await alphabetService.getAll();
 
       res.status(200).json({
          success: true,
-         letters: result,
+         letters: letters,
       });
    } catch {
       res.status(500).json({
@@ -20,11 +20,11 @@ export const getAlphabet = async (_req: Request, res: Response) => {
 
 export const getCompletedAlphabet = async (_req: Request, res: Response) => {
    try {
-      const result = await alphabetService.getAllCompleted();
+      const letters = await alphabetService.getAllCompleted();
 
       res.status(200).json({
          success: true,
-         letters: result,
+         letters: letters,
       });
    } catch {
       res.status(500).json({
@@ -39,11 +39,11 @@ export const addCompletedLetter = async (req: AuthRequest, res: Response) => {
       const { letterId } = req.body;
       const { userId } = req.user;
 
-      const result = await alphabetService.addCompleted(letterId, userId);
+      const letter = await alphabetService.addCompleted(letterId, userId);
 
       res.status(200).json({
          success: true,
-         letter: result,
+         letter: letter,
       });
    } catch {
       res.status(500).json({
