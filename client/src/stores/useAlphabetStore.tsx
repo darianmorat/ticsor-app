@@ -4,12 +4,14 @@ import { create } from "zustand";
 
 type Letter = {
    id: string;
+   order: number;
    letter: string;
    videoUrl: string;
 };
 
 type CompletedLetter = {
    id: string;
+   order: number;
    userId: string;
    letterId: string;
 };

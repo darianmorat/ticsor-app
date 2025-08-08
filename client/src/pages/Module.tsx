@@ -15,18 +15,18 @@ import {
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-type ModuleProps = {
-   id: string;
-   order: number;
-   title: string;
-   lessons: Lesson[];
-};
-
 type Lesson = {
    id: string;
    order: number;
    title: string;
    type: string;
+};
+
+type ModuleProps = {
+   id: string;
+   order: number;
+   title: string;
+   lessons: Lesson[];
 };
 
 export const Module = () => {
@@ -46,15 +46,13 @@ export const Module = () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
-   const userCompletedLessons = completedLessons.filter((l) => l.userId === user?.id);
-
+   // MODULE
    const { moduleId } = useParams();
    if (!moduleId) return;
 
    const module = modules.find((m) => m.order === Number(moduleId));
    if (!module) return;
 
-   // MODULE
    const getModuleProgress = (module: ModuleProps) => {
       if (module.lessons.length === 0) return 0;
 
@@ -66,6 +64,8 @@ export const Module = () => {
    };
 
    // LESSON
+   const userCompletedLessons = completedLessons.filter((l) => l.userId === user?.id);
+
    const getLessonIcon = (type: string, completed: boolean, isAccessible: boolean) => {
       let accesible;
       if (!isAccessible) accesible = "opacity-40";

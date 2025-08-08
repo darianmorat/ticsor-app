@@ -1,13 +1,185 @@
 import { LayoutContainer } from "@/components/layout/Container";
-import { useParams } from "react-router-dom";
+import { useAlphabetStore } from "@/stores/useAlphabetStore";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import ReactPlayer from "react-player";
+import { ArrowLeft } from "lucide-react";
+import { useAuthStore } from "@/stores/useAuthStore";
+import {
+   MediaController,
+   MediaControlBar,
+   MediaTimeRange,
+   MediaTimeDisplay,
+   MediaPlayButton,
+   MediaMuteButton,
+   MediaFullscreenButton,
+} from "media-chrome/react";
+import { Button } from "@/components/ui/button";
 
 export const LetterLesson = () => {
+   const [isCompleted, setIsCompleted] = useState(true);
+   const {
+      alphabet,
+      completedAlphabet,
+      getAlphabet,
+      getCompletedAlphabet,
+      addCompletedLetter,
+   } = useAlphabetStore();
+   const { user } = useAuthStore();
    const { letter } = useParams();
 
+   const navigate = useNavigate();
+
+   useEffect(() => {
+      getAlphabet();
+      getCompletedAlphabet();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
+
+   const currentLetter = alphabet.find((l) => l.letter === letter);
+   const userPracticedLetters = completedAlphabet.filter((l) => l.userId === user?.id);
+   const letterCompleted = userPracticedLetters.some(
+      (l) => l.letterId === currentLetter?.id,
+   );
+
+   const nextLetter = currentLetter
+      ? alphabet.find((l) => l.order === currentLetter.order + 1)
+      : undefined;
+
+   useEffect(() => {
+      if (letterCompleted) {
+         setIsCompleted(true);
+      } else {
+         setIsCompleted(false);
+      }
+   }, [letterCompleted]);
+
+   const practiceAlphabetLetter = async (letterId: string) => {
+      const alreadyExists = userPracticedLetters.some((l) => l.letterId === letterId);
+      if (alreadyExists) return;
+
+      await addCompletedLetter(letterId);
+      await getCompletedAlphabet();
+   };
+
+   if (!currentLetter) return;
+
    return (
-      <LayoutContainer className="flex-1">
-         <div>
-            <h1>Letra: {letter}</h1>
+      <LayoutContainer className="flex-1 flex flex-col gap-4">
+         <button
+            onClick={() => navigate("/alphabet")}
+            className="text-blue-600 hover:text-blue-800 font-medium flex items-center gap-2"
+         >
+            <ArrowLeft className="w-4 h-4" /> Volver al alfabeto
+         </button>
+         <div className="flex flex-col gap-4 md:flex-row">
+            <div className="flex-3 bg-gray-200 dark:bg-gray-200/30 rounded-md p-2 flex justify-center items-center">
+               <div className="bg-background rounded-md p-0 flex flex-col gap-5 shadow-md">
+                  <MediaController
+                     style={{
+                        width: "100%",
+                        height: "auto",
+                        aspectRatio: "15/9",
+                        display: "flex",
+                        alignItems: "center",
+                        borderRadius: "8px",
+                        overflow: "hidden",
+                     }}
+                  >
+                     <ReactPlayer
+                        slot="media"
+                        // src="https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754621676/Uma_Musume_Beginning_of_a_New_Era_-_T.M._Opera_O_EDIT_d2gix9.mp4"
+                        src={currentLetter.videoUrl}
+                        onEnded={() => practiceAlphabetLetter(currentLetter.id)}
+                        controls={false}
+                        style={{
+                           width: "100%",
+                           height: "auto",
+                           aspectRatio: "16/9",
+                           overflow: "hidden",
+                        }}
+                     ></ReactPlayer>
+                     <MediaControlBar>
+                        <MediaPlayButton
+                           style={{ padding: "5px", paddingLeft: "10px" }}
+                        />
+                        <MediaTimeRange style={{ padding: "5px" }} />
+                        <MediaTimeDisplay style={{ padding: "5px" }} />
+                        <MediaMuteButton style={{ padding: "5px" }} />
+                        <MediaFullscreenButton
+                           style={{ padding: "5px", paddingRight: "10px" }}
+                        />
+                     </MediaControlBar>
+                  </MediaController>
+               </div>
+            </div>
+
+            <div className="flex-1 flex flex-col gap-4 sm:flex-row md:flex-col">
+               <div className="flex-2 bg-gray-200 dark:bg-gray-200/30 rounded-md p-2">
+                  <div className="bg-background rounded-md p-2 flex flex-col gap-4 shadow-md h-full text-center justify-center">
+                     <h1 className="text-8xl font-semibold capitalize mt-[-10px]">
+                        {letter}
+                     </h1>
+                     <p className="mt-[-10px]">- Letra -</p>
+                     {isCompleted && (
+                        <p className="bg-green-200/80 text-green-700 rounded-md w-fit px-3 py-1 mx-auto">
+                           Completada
+                        </p>
+                     )}
+                  </div>
+               </div>
+
+               <div className="flex-2 bg-gray-200 dark:bg-gray-200/30 rounded-md p-2">
+                  <div className="bg-background rounded-md p-4 flex flex-col gap-2 shadow-md h-full">
+                     {isCompleted && nextLetter ? (
+                        <div className="flex flex-col justify-center item h-full gap-2">
+                           <h2 className="text-lg font-semibold text-green-700">
+                              Felicidades
+                           </h2>
+                           <p className="text-green-700 text-sm">
+                              Has completado la letra "
+                              <span className="font-medium capitalize">{letter}</span>".
+                              Listo para la siguiente?
+                           </p>
+                           <Button
+                              className="mt-3 bg-green-600 hover:bg-green-600/90"
+                              onClick={() => navigate(`/alphabet/${nextLetter.letter}`)}
+                           >
+                              Siguiente letra: {nextLetter.letter.toUpperCase()}
+                           </Button>
+                        </div>
+                     ) : isCompleted && !nextLetter ? (
+                        <div className="flex flex-col justify-center item h-full gap-2">
+                           <h2 className="text-lg font-semibold text-green-700">
+                              Felicidades
+                           </h2>
+                           <p className="text-green-700 text-sm">
+                              Has completado la letra "
+                              <span className="font-medium capitalize">{letter}</span>".
+                              La cual es la ultima del alfabeto!
+                           </p>
+                           <Button
+                              className="mt-3 bg-green-600 hover:bg-green-600/90"
+                              onClick={() => navigate(`/alphabet/a`)}
+                           >
+                              Revisar letra: A
+                           </Button>
+                        </div>
+                     ) : (
+                        <>
+                           <h2 className="text-lg font-semibold text-blue-800">
+                              Instrucciones
+                           </h2>
+                           <p className="text-blue-700 text-sm">
+                              Mira el video completo para marcar esta letra como
+                              completada. El progreso se guardará automáticamente al
+                              finalizar.
+                           </p>
+                        </>
+                     )}
+                  </div>
+               </div>
+            </div>
          </div>
       </LayoutContainer>
    );

@@ -12,7 +12,6 @@ export const Alphabet = () => {
       completedAlphabet,
       getAlphabet,
       getCompletedAlphabet,
-      // addCompletedLetter,
    } = useAlphabetStore();
    const { user } = useAuthStore();
 
@@ -23,14 +22,6 @@ export const Alphabet = () => {
    }, []);
 
    const userPracticedLetters = completedAlphabet.filter((l) => l.userId === user?.id);
-
-   // const practiceAlphabetLetter = async (letterId: string) => {
-   //    const alreadyExists = userPracticedLetters.some((l) => l.letterId === letterId);
-   //    if (alreadyExists) return;
-   //
-   //    await addCompletedLetter(letterId);
-   //    await getCompletedAlphabet();
-   // };
 
    const getAlphabetProgress = () => {
       return (userPracticedLetters.length / alphabet.length) * 100;
@@ -79,44 +70,45 @@ export const Alphabet = () => {
          </div>
 
          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
-            {alphabet.map((letter) => {
-               const isPracticed = userPracticedLetters.some(
-                  (l) => l.letterId === letter.id,
-               );
+            {[...alphabet]
+               .sort((a, b) => a.letter.localeCompare(b.letter))
+               .map((letter) => {
+                  const isPracticed = userPracticedLetters.some(
+                     (l) => l.letterId === letter.id,
+                  );
 
-               return (
-                  <div
-                     key={letter.id}
-                     className={`rounded-md border p-4 text-center shadow-md ${
-                        isPracticed
-                           ? "border-green-500 dark:border-green-400/30 bg-green-50 dark:bg-green-900/15"
-                           : "border-purple-400 dark:border-purple-400/30 bg-purple-50 dark:bg-purple-900/15"
-                     }`}
-                  >
-                     <div className="flex flex-col items-center gap-3">
-                        <div
-                           className={`text-4xl p-4 w-full rounded-md font-medium capitalize ${isPracticed ? "text-green-600 bg-green-200 dark:bg-green-500/15" : "text-purple-600 bg-purple-200 dark:bg-purple-500/10"}`}
-                        >
-                           {letter.letter}
+                  return (
+                     <div
+                        key={letter.id}
+                        className={`rounded-md border p-4 text-center shadow-md ${
+                           isPracticed
+                              ? "border-green-500 dark:border-green-400/30 bg-green-50 dark:bg-green-900/15"
+                              : "border-purple-400 dark:border-purple-400/30 bg-purple-50 dark:bg-purple-900/15"
+                        }`}
+                     >
+                        <div className="flex flex-col items-center gap-3">
+                           <div
+                              className={`text-4xl p-4 w-full rounded-md font-medium capitalize ${isPracticed ? "text-green-600 bg-green-200 dark:bg-green-500/15" : "text-purple-600 bg-purple-200 dark:bg-purple-500/10"}`}
+                           >
+                              {letter.letter}
+                           </div>
+
+                           <Button
+                              onClick={() => navigate(`/alphabet/${letter.letter}`)}
+                              size="sm"
+                              className={`w-full ${
+                                 isPracticed
+                                    ? "bg-green-500 hover:bg-green-600"
+                                    : "bg-purple-500 hover:bg-purple-600"
+                              }`}
+                           >
+                              {isPracticed ? <CheckCircle /> : <BookOpen />}
+                              {isPracticed ? "Repasar" : "Practicar"}
+                           </Button>
                         </div>
-
-                        <Button
-                           // onClick={() => practiceAlphabetLetter(letter.id)}
-                           onClick={() => navigate(`/alphabet/${letter.letter}`)}
-                           size="sm"
-                           className={`w-full ${
-                              isPracticed
-                                 ? "bg-green-500 hover:bg-green-600"
-                                 : "bg-purple-500 hover:bg-purple-600"
-                           }`}
-                        >
-                           {isPracticed ? <CheckCircle /> : <BookOpen />}
-                           {isPracticed ? "Repasar" : "Practicar"}
-                        </Button>
                      </div>
-                  </div>
-               );
-            })}
+                  );
+               })}
          </div>
       </LayoutContainer>
    );
