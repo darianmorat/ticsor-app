@@ -78,7 +78,6 @@ export const LetterLesson = () => {
                   <MediaController
                      style={{
                         width: "100%",
-                        height: "auto",
                         aspectRatio: "15/9",
                         display: "flex",
                         alignItems: "center",
@@ -88,17 +87,14 @@ export const LetterLesson = () => {
                   >
                      <ReactPlayer
                         slot="media"
-                        // src="https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754621676/Uma_Musume_Beginning_of_a_New_Era_-_T.M._Opera_O_EDIT_d2gix9.mp4"
                         src={currentLetter.videoUrl}
                         onEnded={() => practiceAlphabetLetter(currentLetter.id)}
                         controls={false}
                         style={{
                            width: "100%",
-                           height: "auto",
-                           aspectRatio: "16/9",
-                           overflow: "hidden",
+                           height: "100%",
                         }}
-                     ></ReactPlayer>
+                     />
                      <MediaControlBar>
                         <MediaPlayButton
                            style={{ padding: "5px", paddingLeft: "10px" }}
@@ -122,7 +118,7 @@ export const LetterLesson = () => {
                      </h1>
                      <p className="mt-[-10px]">- Letra -</p>
                      {isCompleted && (
-                        <p className="bg-green-200/80 text-green-700 rounded-md w-fit px-3 py-1 mx-auto">
+                        <p className="bg-green-200/80 dark:bg-green-700/40 text-green-700 dark:text-green-400 rounded-md w-fit px-3 py-1 mx-auto">
                            Completada
                         </p>
                      )}
@@ -133,10 +129,8 @@ export const LetterLesson = () => {
                   <div className="bg-background rounded-md p-4 flex flex-col gap-2 shadow-md h-full">
                      {isCompleted && nextLetter ? (
                         <div className="flex flex-col justify-center item h-full gap-2">
-                           <h2 className="text-lg font-semibold text-green-700">
-                              Felicidades
-                           </h2>
-                           <p className="text-green-700 text-sm">
+                           <h2 className="text-lg font-semibold">Felicidades</h2>
+                           <p className="text-sm">
                               Has completado la letra "
                               <span className="font-medium capitalize">{letter}</span>".
                               Listo para la siguiente?
@@ -150,10 +144,8 @@ export const LetterLesson = () => {
                         </div>
                      ) : isCompleted && !nextLetter ? (
                         <div className="flex flex-col justify-center item h-full gap-2">
-                           <h2 className="text-lg font-semibold text-green-700">
-                              Felicidades
-                           </h2>
-                           <p className="text-green-700 text-sm">
+                           <h2 className="text-lg font-semibold">Felicidades</h2>
+                           <p className="text-sm">
                               Has completado la letra "
                               <span className="font-medium capitalize">{letter}</span>".
                               La cual es la ultima del alfabeto!
@@ -167,10 +159,8 @@ export const LetterLesson = () => {
                         </div>
                      ) : (
                         <>
-                           <h2 className="text-lg font-semibold text-blue-800">
-                              Instrucciones
-                           </h2>
-                           <p className="text-blue-700 text-sm">
+                           <h2 className="text-lg font-semibold">Instrucciones</h2>
+                           <p className="text-sm">
                               Mira el video completo para marcar esta letra como
                               completada. El progreso se guardará automáticamente al
                               finalizar.
