@@ -12,15 +12,15 @@ CREATE TABLE "users" (
 --> statement-breakpoint
 CREATE TABLE "alphabet" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"order" integer NOT NULL,
 	"letter" char(1) NOT NULL,
-	"video_url" varchar
+	"video_url" varchar NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "alphabet_progress" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"user_id" uuid,
-	"letter_id" uuid,
-	"completed" boolean DEFAULT false
+	"letter_id" uuid
 );
 --> statement-breakpoint
 CREATE TABLE "modules" (
@@ -32,15 +32,14 @@ CREATE TABLE "modules" (
 CREATE TABLE "lesson_progress" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"user_id" uuid,
-	"lesson_id" uuid,
-	"completed" boolean DEFAULT false
+	"lesson_id" uuid
 );
 --> statement-breakpoint
 CREATE TABLE "lessons" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"order" integer,
+	"order" integer NOT NULL,
 	"title" varchar(255) NOT NULL,
-	"type" varchar(50),
+	"type" varchar(100),
 	"module_id" uuid
 );
 --> statement-breakpoint

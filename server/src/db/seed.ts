@@ -7,17 +7,17 @@ const main = async () => {
    console.log("Starting database seeding...");
 
    try {
-      // console.log("Seeding users...");
-      // await seedUsers();
+      console.log("Seeding users...");
+      await seedUsers();
 
       console.log("Seeding alphabet...");
       await seedAlphabet();
 
-      // console.log("Seeding modules...");
-      // await seedModules();
-      //
-      // console.log("Seeding modules...");
-      // await seedLessons();
+      console.log("Seeding modules...");
+      await seedModules();
+
+      console.log("Seeding modules...");
+      await seedLessons();
 
       console.log("Seeding completed");
    } catch (error) {

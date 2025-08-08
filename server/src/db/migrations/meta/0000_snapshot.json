@@ -1,5 +1,5 @@
 {
-  "id": "8a66cc24-76b0-4079-8646-c824814881dc",
+  "id": "92bd257b-8fcf-4d03-a484-af61f8bba5d1",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -88,6 +88,12 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
+        "order": {
+          "name": "order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
         "letter": {
           "name": "letter",
           "type": "char(1)",
@@ -98,7 +104,7 @@
           "name": "video_url",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         }
       },
       "indexes": {},
@@ -131,13 +137,6 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": false
-        },
-        "completed": {
-          "name": "completed",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": false,
-          "default": false
         }
       },
       "indexes": {},
@@ -229,13 +228,6 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": false
-        },
-        "completed": {
-          "name": "completed",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": false,
-          "default": false
         }
       },
       "indexes": {},
@@ -288,7 +280,7 @@
           "name": "order",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "title": {
           "name": "title",
@@ -298,7 +290,7 @@
         },
         "type": {
           "name": "type",
-          "type": "varchar(50)",
+          "type": "varchar(100)",
           "primaryKey": false,
           "notNull": false
         },
