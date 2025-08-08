@@ -15,12 +15,12 @@ export const Profile = () => {
    const { alphabet, getAlphabet } = useAlphabetStore();
    const { modules, getModules } = useModuleStore();
    const { user, logout } = useAuthStore();
+
    const { username } = useParams();
+   const navigate = useNavigate();
 
    const shortUserName = userProfile?.name.slice(0, 1);
    const isMyProfile = user?.username === username;
-
-   const navigate = useNavigate();
 
    useEffect(() => {
       if (username) {
@@ -48,6 +48,7 @@ export const Profile = () => {
    const progressAlphabetCount = userProfile?.alphabetProgress?.length || 0;
    const progressLessonCount = userProfile?.lessonProgress?.length || 0;
 
+   const totalAlphabet = alphabet.length;
    const totalLessons = modules.reduce(
       (total, module) => total + module.lessons.length,
       0,
@@ -67,7 +68,7 @@ export const Profile = () => {
                <div className="flex justify-between items-center flex-wrap gap-4">
                   <div className="flex items-center">
                      <div className="w-16 h-16 bg-accent border rounded-md flex items-center justify-center">
-                        <Avatar className="cursor-pointer pb-1">
+                        <Avatar className="pb-1">
                            <AvatarImage src="" />
                            <AvatarFallback className="text-4xl">
                               {shortUserName}
@@ -87,7 +88,7 @@ export const Profile = () => {
                         </Button>
                         <Button
                            variant="outline"
-                           className="text-red-600 hover:text-red-700 hover:bg-red-50 flex-1"
+                           className="text-red-600 hover:text-red-600 hover:bg-red-50 flex-1"
                            onClick={() => {
                               navigate("/");
                               logout();
@@ -145,19 +146,19 @@ export const Profile = () => {
                         </div>
                      </div>
                      <p className="text-xl font-medium">
-                        {progressAlphabetCount}/{alphabet.length}
+                        {progressAlphabetCount}/{totalAlphabet}
                      </p>
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-400/20 rounded-full h-4">
                      <div
-                        className={`${progressAlphabetCount === alphabet.length ? "bg-green-500" : "bg-gradient-to-r from-purple-500 to-green-500"} h-4 rounded-full transition-all duration-500`}
+                        className={`${progressAlphabetCount === totalAlphabet ? "bg-green-500" : "bg-gradient-to-r from-purple-500 to-green-500"} h-4 rounded-full transition-all duration-500`}
                         style={{
-                           width: `${(progressAlphabetCount / alphabet.length) * 100}%`,
+                           width: `${(progressAlphabetCount / totalAlphabet) * 100}%`,
                         }}
                      ></div>
                   </div>
                   <p className="text-muted-foreground text-sm mt-[-10px]">
-                     {Math.round((progressAlphabetCount / alphabet.length) * 100)}%
+                     {Math.round((progressAlphabetCount / totalAlphabet) * 100)}%
                      completado
                   </p>
                </div>
