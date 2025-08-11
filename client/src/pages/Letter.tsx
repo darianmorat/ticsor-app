@@ -73,17 +73,18 @@ export const LetterLesson = () => {
             <ArrowLeft className="w-4 h-4" /> Volver al alfabeto
          </button>
          <div className="flex flex-col gap-4 md:flex-row">
-            <div className="flex-3 bg-gray-200 dark:bg-gray-200/30 rounded-md p-2 flex justify-center items-center">
+            <div className="flex-6 bg-gray-200 dark:bg-gray-200/30 rounded-md p-2 flex justify-center items-center">
                <div className="bg-background rounded-md p-0 flex flex-col gap-5 shadow-md">
                   <MediaController
                      style={{
                         width: "100%",
-                        aspectRatio: "15/9",
                         display: "flex",
                         alignItems: "center",
+                        padding: "5px",
                         borderRadius: "8px",
                         overflow: "hidden",
                      }}
+                     className="h-[330px] sm:h-[400px] md:h-[435px]"
                   >
                      <ReactPlayer
                         slot="media"
@@ -94,6 +95,7 @@ export const LetterLesson = () => {
                            width: "100%",
                            height: "100%",
                         }}
+                        className="w-full lg:min-w-[635px]"
                      />
                      <MediaControlBar>
                         <MediaPlayButton
@@ -110,7 +112,7 @@ export const LetterLesson = () => {
                </div>
             </div>
 
-            <div className="flex-1 flex flex-col gap-4 sm:flex-row md:flex-col">
+            <div className="flex-3 flex flex-col gap-4 sm:flex-row md:flex-col">
                <div className="flex-2 bg-gray-200 dark:bg-gray-200/30 rounded-md p-2">
                   <div className="bg-background rounded-md p-2 flex flex-col gap-4 shadow-md h-full text-center justify-center">
                      <h1 className="text-8xl font-semibold capitalize mt-[-10px]">
