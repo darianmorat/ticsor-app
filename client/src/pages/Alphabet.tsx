@@ -26,7 +26,7 @@ export const Alphabet = () => {
 
    const navigate = useNavigate();
 
-   if (isLoading && (!alphabet.length || !completedAlphabet.length)) {
+   if (isLoading && !alphabet.length) {
       return <SkeletonAlphabet />;
    }
 

@@ -60,7 +60,7 @@ export const ModuleSection = () => {
       0,
    );
 
-   if (isLoading && (!modules.length || !completedLessons.length)) {
+   if (isLoading && !modules.length) {
       return <SkeletonSection />;
    }
 
