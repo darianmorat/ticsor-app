@@ -1,4 +1,5 @@
 import { LayoutContainer } from "@/components/layout/Container";
+import { SkeletonAlphabet } from "@/components/loading/alphabet/alphabet";
 import { Button } from "@/components/ui/button";
 import { useAlphabetStore } from "@/stores/useAlphabetStore";
 import { useAuthStore } from "@/stores/useAuthStore";
@@ -7,12 +8,8 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const Alphabet = () => {
-   const {
-      alphabet,
-      completedAlphabet,
-      getAlphabet,
-      getCompletedAlphabet,
-   } = useAlphabetStore();
+   const { isLoading, alphabet, completedAlphabet, getAlphabet, getCompletedAlphabet } =
+      useAlphabetStore();
    const { user } = useAuthStore();
 
    useEffect(() => {
@@ -28,6 +25,10 @@ export const Alphabet = () => {
    };
 
    const navigate = useNavigate();
+
+   if (isLoading && (!alphabet.length || !completedAlphabet.length)) {
+      return <SkeletonAlphabet />;
+   }
 
    return (
       <LayoutContainer className="flex-1 flex flex-col gap-4">

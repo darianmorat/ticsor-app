@@ -4,6 +4,7 @@ import { useModuleStore } from "@/stores/useModuleStore";
 import { BookOpen, CheckCircle, Layers, Lock, Play } from "lucide-react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { SkeletonSection } from "../loading/module/section";
 
 type ModuleProps = {
    id: string;
@@ -20,7 +21,7 @@ type Lesson = {
 };
 
 export const ModuleSection = () => {
-   const { modules, getModules, completedLessons, getCompletedLessons } =
+   const { isLoading, modules, completedLessons, getModules, getCompletedLessons } =
       useModuleStore();
    const { user } = useAuthStore();
 
@@ -58,6 +59,11 @@ export const ModuleSection = () => {
       (total, module) => total + module.lessons.length,
       0,
    );
+
+   if (isLoading && (!modules.length || !completedLessons.length)) {
+      return <SkeletonSection />;
+   }
+
    return (
       <>
          <div className="flex flex-col gap-2">
