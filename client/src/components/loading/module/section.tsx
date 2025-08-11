@@ -3,10 +3,18 @@ import { Skeleton } from "@/components/ui/skeleton";
 export const SkeletonSection = () => {
    return (
       <>
-         <div className="flex flex-col gap-2">
-            <Skeleton className="h-6 w-30" />
-            <Skeleton className="h-4 w-20" />
-            <Skeleton className="h-4 w-full" />
+         <div className="flex flex-col gap-2 mt-2">
+            <div className="flex justify-between items-center">
+               <div>
+                  <Skeleton className="h-5 w-40 mb-1" />
+                  <Skeleton className="h-4 w-32" />
+               </div>
+               <div className="flex flex-col items-end gap-1">
+                  <Skeleton className="h-5 w-16" />
+                  <Skeleton className="h-4 w-24" />
+               </div>
+            </div>
+            <Skeleton className="h-4 w-full rounded-full" />
          </div>
 
          <div className="grid gap-8 grid-cols-1 md:grid-cols-2">
