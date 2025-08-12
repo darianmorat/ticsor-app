@@ -31,15 +31,14 @@ export const Alphabet = () => {
    }
 
    return (
-      <LayoutContainer className="flex-1 flex flex-col gap-4">
-         <button
-            onClick={() => navigate("/home")}
-            className="text-blue-600 hover:text-blue-800 font-medium flex items-center gap-2"
-         >
-            <ArrowLeft className="w-4 h-4" /> Volver al inicio
-         </button>
-
-         <div className="flex flex-col gap-2 mb-4">
+      <LayoutContainer className="flex-1 flex flex-col gap-8">
+         <div className="flex flex-col gap-2">
+            <button
+               onClick={() => navigate("/home")}
+               className="text-blue-600 hover:text-blue-600/80 font-medium flex items-center gap-2 mb-4 w-fit"
+            >
+               <ArrowLeft className="w-4 h-4" /> Regresar
+            </button>
             <div className="flex justify-between items-center">
                <div>
                   <h3 className="text-xl font-medium">Mi progreso:</h3>
@@ -99,8 +98,8 @@ export const Alphabet = () => {
                               size="sm"
                               className={`w-full ${
                                  isPracticed
-                                    ? "bg-green-500 hover:bg-green-600"
-                                    : "bg-purple-500 hover:bg-purple-600"
+                                    ? "bg-green-500 hover:bg-green-500/80"
+                                    : "bg-purple-500 hover:bg-purple-500/80"
                               }`}
                            >
                               {isPracticed ? <CheckCircle /> : <BookOpen />}

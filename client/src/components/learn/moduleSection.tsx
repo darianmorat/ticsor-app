@@ -129,33 +129,34 @@ export const ModuleSection = () => {
                            </div>
                         </div>
 
-                        <Button
-                           disabled={!isUnlocked}
-                           // cursor style not applied!
-                           className={`${progress === 100 && "bg-green-500 hover:bg-green-500/90"} ${!isUnlocked && "bg-gray-300 text-gray-700 cursor-not-allowed"}`}
-                           onClick={() =>
-                              isUnlocked && navigate(`/module/${module.order}`)
-                           }
-                        >
-                           {progress === 100 ? (
-                              <CheckCircle />
-                           ) : isUnlocked && progress === 0 ? (
-                              <BookOpen />
-                           ) : isUnlocked ? (
-                              <Play />
-                           ) : (
-                              <Lock />
-                           )}
-                           {progress === 100 ? (
-                              <>Revisar módulo</>
-                           ) : isUnlocked && progress === 0 ? (
-                              <>Empezar módulo</>
-                           ) : isUnlocked ? (
-                              <>Continuar módulo</>
-                           ) : (
-                              <>Bloqueado</>
-                           )}
-                        </Button>
+                        <div className={`${!isUnlocked && "cursor-not-allowed"}`}>
+                           <Button
+                              disabled={!isUnlocked}
+                              className={`w-full ${progress === 100 && "bg-green-500 hover:bg-green-500/90"} ${!isUnlocked && "bg-gray-300 dark:bg-gray-300/70 text-gray-700 dark:text-black/60"}`}
+                              onClick={() =>
+                                 isUnlocked && navigate(`/module/${module.order}`)
+                              }
+                           >
+                              {progress === 100 ? (
+                                 <CheckCircle />
+                              ) : isUnlocked && progress === 0 ? (
+                                 <BookOpen />
+                              ) : isUnlocked ? (
+                                 <Play />
+                              ) : (
+                                 <Lock />
+                              )}
+                              {progress === 100 ? (
+                                 <>Revisar módulo</>
+                              ) : isUnlocked && progress === 0 ? (
+                                 <>Empezar módulo</>
+                              ) : isUnlocked ? (
+                                 <>Continuar módulo</>
+                              ) : (
+                                 <>Bloqueado</>
+                              )}
+                           </Button>
+                        </div>
                      </div>
                   </div>
                );
