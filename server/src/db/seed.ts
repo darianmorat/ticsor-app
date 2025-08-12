@@ -16,7 +16,7 @@ const main = async () => {
       console.log("Seeding modules...");
       await seedModules();
 
-      console.log("Seeding modules...");
+      console.log("Seeding lessons...");
       await seedLessons();
 
       console.log("Seeding completed");

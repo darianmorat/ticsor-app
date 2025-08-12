@@ -4,26 +4,119 @@ import { lessons, modules } from "../schema";
 export const seedLessons = async () => {
    const moduleTable = await db.select().from(modules);
 
-   const getId = (i: number) => {
+   const module = (i: number) => {
       return moduleTable.find((m) => m.order === i)?.id;
    };
 
    const data = [
-      { moduleId: getId(1), order: 1, title: "Abecedario", type: "activity" },
-      { moduleId: getId(1), order: 2, title: "Letra B", type: "video" },
-      { moduleId: getId(1), order: 3, title: "Letra C", type: "video" },
-      { moduleId: getId(1), order: 4, title: "Actividad Práctica", type: "activity" },
-      { moduleId: getId(1), order: 5, title: "Juego Interactivo", type: "game" },
+      // MODULE #1
+      {
+         moduleId: module(1),
+         order: 1,
+         title: "Deletrea tu nombre",
+         type: "activity",
+         steps: [
+            {
+               step: 1,
+               type: "intro",
+               intro: {
+                  text: "Description of the objective of the activity here",
+               },
+            },
+            {
+               step: 2,
+               type: "minigame",
+            },
+         ],
+      },
+      {
+         moduleId: module(1),
+         order: 2,
+         title: "Que letra es?",
+         type: "activity",
+         steps: [],
+      },
 
-      { moduleId: getId(2), order: 1, title: "Introducción", type: "video" },
-      { moduleId: getId(2), order: 2, title: "Ejercicio 1", type: "activity" },
-      { moduleId: getId(2), order: 3, title: "Quiz Literal", type: "game" },
+      // MODULE #2
+      {
+         moduleId: module(2),
+         order: 1,
+         title: "La liebre y la tortuga",
+         type: "quiz",
+         steps: [
+            {
+               step: 1,
+               type: "intro",
+               intro: {
+                  text: "Érase una vez una liebre muy veloz que presumía de ello ante todos los animales del bosque. Un día, se encontró con una tortuga.",
+                  videoUrl:
+                     "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754621676/Uma_Musume_Beginning_of_a_New_Era_-_T.M._Opera_O_EDIT_d2gix9.mp4",
+               },
+            },
+            {
+               step: 2,
+               type: "quiz",
+               questions: [
+                  {
+                     id: 1,
+                     question: "¿Por qué se burló la liebre de la tortuga?",
+                     options: [
+                        "Porque la tortuga sabía nadar",
+                        "Porque era más grande que ella",
+                        "Porque caminaba muy despacio",
+                        "Porque dormía mucho",
+                     ],
+                     answer: 2,
+                  },
+                  {
+                     id: 2,
+                     question: "Testing",
+                     options: ["Testing a", "Testing b", "Testing c", "Testing d"],
+                     answer: 3,
+                  },
+               ],
+            },
+         ],
+      },
+      {
+         moduleId: module(2),
+         order: 2,
+         title: "Empty section",
+         type: "Empty section",
+         steps: [],
+      },
 
-      { moduleId: getId(3), order: 1, title: "Conceptos Básicos", type: "video" },
-      { moduleId: getId(3), order: 2, title: "Práctica Inferencial", type: "activity" },
+      // MODULE #3
+      {
+         moduleId: module(3),
+         order: 1,
+         title: "Empty section",
+         type: "Empty section",
+         steps: [],
+      },
+      {
+         moduleId: module(3),
+         order: 2,
+         title: "Empty section",
+         type: "Empty section",
+         steps: [],
+      },
 
-      { moduleId: getId(4), order: 1, title: "Análisis Crítico", type: "video" },
-      { moduleId: getId(4), order: 2, title: "Evaluación Final", type: "activity" },
+      // MODULE #4
+      {
+         moduleId: module(4),
+         order: 1,
+         title: "Empty section",
+         type: "Empty section",
+         steps: [],
+      },
+      {
+         moduleId: module(4),
+         order: 2,
+         title: "Empty section",
+         type: "Empty section",
+         steps: [],
+      },
    ];
 
    try {
