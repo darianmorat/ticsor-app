@@ -1,7 +1,7 @@
 import { LayoutContainer } from "@/components/layout/Container";
 import { useAlphabetStore } from "@/stores/useAlphabetStore";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import ReactPlayer from "react-player";
 import { ArrowLeft } from "lucide-react";
 import { useAuthStore } from "@/stores/useAuthStore";
@@ -15,9 +15,11 @@ import {
    MediaFullscreenButton,
 } from "media-chrome/react";
 import { Button } from "@/components/ui/button";
+import { SkeletonAlphabetLetter } from "@/components/loading/alphabet/alphabetLetter";
 
-export const LetterLesson = () => {
-   const [isCompleted, setIsCompleted] = useState(true);
+export const AlphabetLetter = () => {
+   const [isCompleted, setIsCompleted] = useState(false);
+   const [isLoading, setIsLoading] = useState(true);
    const {
       alphabet,
       completedAlphabet,
@@ -31,8 +33,14 @@ export const LetterLesson = () => {
    const navigate = useNavigate();
 
    useEffect(() => {
-      getAlphabet();
-      getCompletedAlphabet();
+      const getData = async () => {
+         await getAlphabet();
+         await getCompletedAlphabet();
+
+         setIsLoading(false);
+      };
+
+      getData();
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
@@ -62,15 +70,21 @@ export const LetterLesson = () => {
       await getCompletedAlphabet();
    };
 
-   if (!currentLetter) return;
+   if (!isLoading && !currentLetter) {
+      return <Navigate to={"/404"} />;
+   }
+
+   if (isLoading && !currentLetter) {
+      return <SkeletonAlphabetLetter />;
+   }
 
    return (
-      <LayoutContainer className="flex-1 flex flex-col gap-4">
+      <LayoutContainer className="flex-1 flex flex-col gap-8">
          <button
             onClick={() => navigate("/alphabet")}
-            className="text-blue-600 hover:text-blue-800 font-medium flex items-center gap-2"
+            className="text-blue-600 hover:text-blue-600/80 font-medium flex items-center gap-2"
          >
-            <ArrowLeft className="w-4 h-4" /> Volver al alfabeto
+            <ArrowLeft className="w-4 h-4" /> Regresar
          </button>
          <div className="flex flex-col gap-4 md:flex-row">
             <div className="flex-6 bg-gray-200 dark:bg-gray-200/30 rounded-md p-2 flex justify-center items-center">
@@ -80,22 +94,21 @@ export const LetterLesson = () => {
                         width: "100%",
                         display: "flex",
                         alignItems: "center",
-                        padding: "5px",
                         borderRadius: "8px",
                         overflow: "hidden",
                      }}
-                     className="h-[330px] sm:h-[400px] md:h-[435px]"
+                     className="h-[330px] sm:h-[400px] md:h-[420px]"
                   >
                      <ReactPlayer
                         slot="media"
-                        src={currentLetter.videoUrl}
-                        onEnded={() => practiceAlphabetLetter(currentLetter.id)}
+                        src={currentLetter?.videoUrl}
+                        onEnded={() => practiceAlphabetLetter(currentLetter?.id)}
                         controls={false}
                         style={{
                            width: "100%",
                            height: "100%",
                         }}
-                        className="w-full lg:min-w-[635px]"
+                        className="w-full lg:min-w-[640px]"
                      />
                      <MediaControlBar>
                         <MediaPlayButton

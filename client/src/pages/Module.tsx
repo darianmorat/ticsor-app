@@ -7,9 +7,9 @@ import {
    Book,
    BookOpen,
    CheckCircle,
+   CircleAlert,
    Layers,
    Lock,
-   Play,
    Target,
 } from "lucide-react";
 import { useEffect } from "react";
@@ -35,7 +35,7 @@ export const Module = () => {
       completedLessons,
       getModules,
       getCompletedLessons,
-      addCompletedLesson,
+      // addCompletedLesson,
    } = useModuleStore();
    const { user } = useAuthStore();
    const navigate = useNavigate();
@@ -47,10 +47,10 @@ export const Module = () => {
    }, []);
 
    // MODULE
-   const { moduleId } = useParams();
-   if (!moduleId) return;
+   const { i: moduleIndex } = useParams();
+   if (!moduleIndex) return;
 
-   const module = modules.find((m) => m.order === Number(moduleId));
+   const module = modules.find((m) => m.order === Number(moduleIndex));
    if (!module) return;
 
    const getModuleProgress = (module: ModuleProps) => {
@@ -73,33 +73,32 @@ export const Module = () => {
       if (completed) return <CheckCircle className="w-5 h-5 text-green-500" />;
 
       switch (type) {
-         case "video":
-            return <Play className={`w-5 h-5 text-blue-500 ${accesible}`} />;
          case "activity":
-            return <Book className={`w-5 h-5 text-orange-500 ${accesible}`} />;
-         case "game":
-            return <Target className={`w-5 h-5 text-purple-500 ${accesible}`} />;
+            return <Target className={`w-5 h-5 text-orange-500 ${accesible}`} />;
+         case "quiz":
+            return <Book className={`w-5 h-5 text-blue-500 ${accesible}`} />;
          default:
-            return <Play className={`w-5 h-5 text-gray-500 ${accesible}`} />;
+            return <CircleAlert className={`w-5 h-5 text-gray-500 ${accesible}`} />;
       }
    };
 
-   const handleCompleteLesson = async (lessonId: string) => {
-      const alreadyExists = userCompletedLessons.some((l) => l.lessonId === lessonId);
-      if (alreadyExists) return;
-
-      await addCompletedLesson(lessonId);
-      await getCompletedLessons();
-   };
+   // const handleCompleteLesson = async (lessonId: string) => {
+   //    const alreadyExists = userCompletedLessons.some((l) => l.lessonId === lessonId);
+   //    if (alreadyExists) return;
+   //
+   //    await addCompletedLesson(lessonId);
+   //    await getCompletedLessons();
+   // };
 
    return (
-      <LayoutContainer className="flex-1 flex flex-col gap-4">
+      <LayoutContainer className="flex-1 flex flex-col gap-8">
          <button
             onClick={() => navigate("/home")}
-            className="text-blue-600 hover:text-blue-800 font-medium flex items-center gap-2"
+            className="text-blue-600 hover:text-blue-600/80 font-medium flex items-center gap-2"
          >
-            <ArrowLeft className="w-4 h-4" /> Volver al inicio
+            <ArrowLeft className="w-4 h-4" /> Regresar
          </button>
+         {/* <Button onClick={() => console.log(modules[0].lessons[0].steps)}>get modules</Button> */}
 
          <div className="bg-gray-200 dark:bg-gray-200/30 rounded-md p-2">
             <div className="bg-background rounded-md p-4 flex flex-col gap-5 shadow-md">
@@ -146,11 +145,11 @@ export const Module = () => {
                return (
                   <div
                      key={lesson.id}
-                     className={`rounded-lg border p-4 border-l-5 shadow-md ${
+                     className={`rounded-md border-4 p-4 shadow-md ${
                         isCompleted
                            ? "border-green-500"
                            : isAccessible
-                             ? "border-blue-500"
+                             ? "border-blue-500/70"
                              : "border-gray-300 dark:border-gray-300/50"
                      }`}
                   >
@@ -173,11 +172,11 @@ export const Module = () => {
                                           : "text-muted-foreground/50"
                                     }`}
                                  >
-                                    {lesson.type === "video"
-                                       ? "Video"
-                                       : lesson.type === "activity"
-                                         ? "Actividad"
-                                         : "Juego"}
+                                    {lesson.type === "activity"
+                                       ? "Actividad"
+                                       : lesson.type === "quiz"
+                                         ? "Quiz"
+                                         : "xxxxxx"}
                                  </p>
                               </div>
                            </div>
@@ -189,30 +188,37 @@ export const Module = () => {
                         </div>
 
                         <div className="flex items-center gap-3 w-full sm:w-60">
-                           <Button
-                              onClick={() =>
-                                 !isCompleted &&
-                                 isAccessible &&
-                                 handleCompleteLesson(lesson.id)
-                              }
-                              disabled={!isAccessible}
-                              className={`w-full ${isCompleted && "bg-green-500 hover:bg-green-600"} ${!isAccessible && "bg-gray-300 text-gray-700 cursor-not-allowed"}`}
+                           <div
+                              className={`w-full ${!isAccessible && "cursor-not-allowed"}`}
                            >
-                              {isCompleted ? (
-                                 <CheckCircle />
-                              ) : isAccessible ? (
-                                 <BookOpen />
-                              ) : (
-                                 <Lock />
-                              )}
-                              {isCompleted ? (
-                                 <>Revisar lección</>
-                              ) : isAccessible ? (
-                                 <>Empezar lección</>
-                              ) : (
-                                 <>Bloqueado</>
-                              )}
-                           </Button>
+                              <Button
+                                 onClick={() =>
+                                    !isCompleted &&
+                                    isAccessible &&
+                                    // handleCompleteLesson(lesson.id)
+                                    navigate(
+                                       `/module/${moduleIndex}/lesson/${lesson.order}`,
+                                    )
+                                 }
+                                 disabled={!isAccessible}
+                                 className={`w-full ${isCompleted && "bg-green-500 hover:bg-green-600"} ${!isAccessible && "bg-gray-300 dark:bg-gray-300/70 text-gray-700 dark:text-black/60 cursor-not-allowed"}`}
+                              >
+                                 {isCompleted ? (
+                                    <CheckCircle />
+                                 ) : isAccessible ? (
+                                    <BookOpen />
+                                 ) : (
+                                    <Lock />
+                                 )}
+                                 {isCompleted ? (
+                                    <>Revisar lección</>
+                                 ) : isAccessible ? (
+                                    <>Empezar lección</>
+                                 ) : (
+                                    <>Bloqueado</>
+                                 )}
+                              </Button>
+                           </div>
                         </div>
                      </div>
                   </div>

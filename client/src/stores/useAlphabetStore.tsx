@@ -17,7 +17,7 @@ type CompletedLetter = {
 };
 
 type Store = {
-   isLoading: boolean; // Not used for now
+   isLoading: boolean;
    alphabet: Letter[];
    completedAlphabet: CompletedLetter[];
    getAlphabet: () => Promise<void>;
