@@ -1,4 +1,4 @@
-import { uuid, varchar, pgTable, integer } from "drizzle-orm/pg-core";
+import { uuid, varchar, pgTable, integer, jsonb } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { users } from "./users";
 import { modules } from "./modules";
@@ -12,6 +12,7 @@ export const lessons = pgTable("lessons", {
    title: varchar("title", { length: 255 }).notNull(),
    type: varchar("type", { length: 100 }),
    moduleId: uuid("module_id").references(() => modules.id),
+   steps: jsonb("steps"),
 });
 
 export const lessonProgress = pgTable("lesson_progress", {
