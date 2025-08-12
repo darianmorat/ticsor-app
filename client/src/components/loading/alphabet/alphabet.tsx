@@ -1,21 +1,22 @@
 import { LayoutContainer } from "@/components/layout/Container";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ArrowLeft } from "lucide-react";
 
 export const SkeletonAlphabet = () => {
    return (
       <LayoutContainer className="flex-1 flex flex-col gap-4">
-         <div className="flex items-center gap-2 mb-4 mt-0">
-            <Skeleton className="h-4 w-4 rounded" />
-            <Skeleton className="h-4 w-32" />
+         <div className="flex items-center gap-2 mb-4 mt-1">
+            <ArrowLeft className="w-4 h-4 text-gray-500" />
+            <Skeleton className="h-4 w-20" />
          </div>
 
          <div className="flex flex-col gap-2 mb-4">
             <div className="flex justify-between items-center">
-               <div>
-                  <Skeleton className="h-5 w-40 mb-1" />
+               <div className="flex flex-col gap-2">
+                  <Skeleton className="h-5 w-40" />
                   <Skeleton className="h-4 w-32" />
                </div>
-               <div className="flex flex-col items-end gap-1">
+               <div className="flex flex-col items-end gap-2">
                   <Skeleton className="h-5 w-16" />
                   <Skeleton className="h-4 w-24" />
                </div>
