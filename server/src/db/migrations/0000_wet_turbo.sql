@@ -14,7 +14,8 @@ CREATE TABLE "alphabet" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"order" integer NOT NULL,
 	"letter" char(1) NOT NULL,
-	"video_url" varchar NOT NULL
+	"video_url" varchar NOT NULL,
+	"image_url" varchar NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "alphabet_progress" (
@@ -40,7 +41,8 @@ CREATE TABLE "lessons" (
 	"order" integer NOT NULL,
 	"title" varchar(255) NOT NULL,
 	"type" varchar(100),
-	"module_id" uuid
+	"module_id" uuid,
+	"steps" jsonb
 );
 --> statement-breakpoint
 ALTER TABLE "alphabet_progress" ADD CONSTRAINT "alphabet_progress_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint

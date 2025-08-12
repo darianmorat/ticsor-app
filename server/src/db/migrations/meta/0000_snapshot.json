@@ -1,5 +1,5 @@
 {
-  "id": "92bd257b-8fcf-4d03-a484-af61f8bba5d1",
+  "id": "4ecdf2aa-493c-41d8-9cd6-75a6c3168635",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -102,6 +102,12 @@
         },
         "video_url": {
           "name": "video_url",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "image_url": {
+          "name": "image_url",
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
@@ -297,6 +303,12 @@
         "module_id": {
           "name": "module_id",
           "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "steps": {
+          "name": "steps",
+          "type": "jsonb",
           "primaryKey": false,
           "notNull": false
         }
