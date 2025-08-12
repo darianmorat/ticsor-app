@@ -48,7 +48,7 @@ export const Users = () => {
             </Button>
          </div>
          <Separator className="my-8" />
-         <div className="overflow-x-auto rounded-sm border-1">
+         <div className="overflow-x-auto rounded-md border-1">
             <table className="min-w-full text-left">
                <thead className="bg-accent uppercase text-xs">
                   <tr>

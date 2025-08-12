@@ -23,7 +23,7 @@ export const DeleteUser = ({ handleModal, user }: DeleteUserProps) => {
 
    return (
       <Modal onClose={handleModal}>
-         <div className="relative bg-background dark:bg-accent p-6 rounded-lg m-4 w-full max-w-100 flex flex-col gap-2">
+         <div className="relative bg-background dark:bg-accent p-6 rounded-md m-4 w-full max-w-100 flex flex-col gap-2">
             <h1 className="text-2xl font-bold">Eliminar usuario</h1>
             <p className="text-muted-foreground text-sm">
                Confirma que quiere eliminar el usuario{" "}

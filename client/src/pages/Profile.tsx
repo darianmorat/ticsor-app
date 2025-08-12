@@ -169,7 +169,7 @@ export const Profile = () => {
             <div className="bg-background rounded-md p-4 flex flex-col gap-5 shadow-md">
                <h3 className="font-medium">Información personal</h3>
                <div className="space-y-4">
-                  <div className="flex items-center p-3 border bg-accent/30 rounded-lg">
+                  <div className="flex items-center p-3 border bg-accent/30 rounded-md">
                      <User className="w-5 h-5 text-muted-foreground mr-3" />
                      <div>
                         <label className="text-sm font-medium">Nombre completo</label>
@@ -177,7 +177,7 @@ export const Profile = () => {
                      </div>
                   </div>
 
-                  <div className="flex items-center p-3 border bg-accent/30 rounded-lg">
+                  <div className="flex items-center p-3 border bg-accent/30 rounded-md">
                      <Mail className="w-5 h-5 text-muted-foreground mr-3" />
                      <div>
                         <label className="text-sm font-medium">Correo electrónico</label>
@@ -185,7 +185,7 @@ export const Profile = () => {
                      </div>
                   </div>
 
-                  <div className="flex items-center p-3 border bg-accent/30 rounded-lg">
+                  <div className="flex items-center p-3 border bg-accent/30 rounded-md">
                      <Calendar className="w-5 h-5 text-muted-foreground mr-3" />
                      <div>
                         <label className="text-sm font-medium">Miembro desde</label>

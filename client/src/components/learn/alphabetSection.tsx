@@ -38,7 +38,7 @@ export const AlphabetSection = () => {
             <div className="flex flex-col gap-2 justify-center">
                <Button
                   onClick={() => navigate("/alphabet")}
-                  className="bg-purple-600 hover:bg-purple-700 text-white w-full md:w-50"
+                  className="bg-purple-600 hover:bg-purple-600/80 text-white dark:text-background w-full md:w-50"
                >
                   {getAlphabetProgress() === 100 ? <CheckCircle /> : <BookOpen />}
                   {getAlphabetProgress() === 100

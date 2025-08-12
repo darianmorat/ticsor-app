@@ -7,9 +7,9 @@ export const Learn = () => {
       <LayoutContainer className="flex-1 flex flex-col gap-8">
          <h1 className="text-3xl font-bold text-center mt-4">
             Aprende{" "}
-            <span className="relative inline-block">
+            <span className="relative inline-block p-1">
                <span className="relative z-1">lengua de señas</span>
-               <span className="absolute inset-0 bg-yellow-300 transform skew-y-1 animate-pulse opacity-70"></span>
+               <span className="absolute inset-0 bg-yellow-300 transform -skew-y-2 opacity-50 rounded-sm"></span>
             </span>
          </h1>
          <AlphabetSection />
