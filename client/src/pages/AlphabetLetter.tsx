@@ -2,18 +2,8 @@ import { LayoutContainer } from "@/components/layout/Container";
 import { useAlphabetStore } from "@/stores/useAlphabetStore";
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import ReactPlayer from "react-player";
 import { ArrowLeft } from "lucide-react";
 import { useAuthStore } from "@/stores/useAuthStore";
-import {
-   MediaController,
-   MediaControlBar,
-   MediaTimeRange,
-   MediaTimeDisplay,
-   MediaPlayButton,
-   MediaMuteButton,
-   MediaFullscreenButton,
-} from "media-chrome/react";
 import { Button } from "@/components/ui/button";
 import { SkeletonAlphabetLetter } from "@/components/loading/alphabet/alphabetLetter";
 
@@ -87,44 +77,16 @@ export const AlphabetLetter = () => {
             <ArrowLeft className="w-4 h-4" /> Regresar
          </button>
          <div className="flex flex-col gap-4 md:flex-row">
-            <div className="flex-6 bg-gray-200 dark:bg-gray-200/30 rounded-md p-2 flex justify-center items-center">
-               <div className="bg-background rounded-md p-0 flex flex-col gap-5 shadow-md">
-                  <MediaController
-                     style={{
-                        width: "100%",
-                        display: "flex",
-                        alignItems: "center",
-                        borderRadius: "8px",
-                        overflow: "hidden",
-                     }}
-                     className="h-[330px] sm:h-[400px] md:h-[420px]"
-                  >
-                     <ReactPlayer
-                        slot="media"
-                        src={currentLetter?.videoUrl}
-                        onEnded={() => practiceAlphabetLetter(currentLetter?.id)}
-                        controls={false}
-                        style={{
-                           width: "100%",
-                           height: "100%",
-                        }}
-                        className="w-full lg:min-w-[640px]"
-                     />
-                     <MediaControlBar>
-                        <MediaPlayButton
-                           style={{ padding: "5px", paddingLeft: "10px" }}
-                        />
-                        <MediaTimeRange style={{ padding: "5px" }} />
-                        <MediaTimeDisplay style={{ padding: "5px" }} />
-                        <MediaMuteButton style={{ padding: "5px" }} />
-                        <MediaFullscreenButton
-                           style={{ padding: "5px", paddingRight: "10px" }}
-                        />
-                     </MediaControlBar>
-                  </MediaController>
-               </div>
+            <div className="flex-7 bg-gray-200 dark:bg-gray-200/30 rounded-md flex justify-center items-center p-2">
+               <video
+                  controls
+                  className="w-full max-w-2xl h-[300px] sm:h-[400px] rounded-md bg-black"
+                  src={currentLetter?.videoUrl}
+                  onEnded={() => practiceAlphabetLetter(currentLetter?.id)}
+               >
+                  Tu navegador no soporta el elemento de video.
+               </video>
             </div>
-
             <div className="flex-3 flex flex-col gap-4 sm:flex-row md:flex-col">
                <div className="flex-2 bg-gray-200 dark:bg-gray-200/30 rounded-md p-2">
                   <div className="bg-background rounded-md p-2 flex flex-col gap-4 shadow-md h-full text-center justify-center">

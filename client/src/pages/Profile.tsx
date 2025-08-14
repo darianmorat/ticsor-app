@@ -19,31 +19,8 @@ export const Profile = () => {
    const { username } = useParams();
    const navigate = useNavigate();
 
-   const shortUserName = userProfile?.name.slice(0, 1);
+   const shortUserName = userProfile?.name?.slice(0, 1);
    const isMyProfile = user?.username === username;
-
-   useEffect(() => {
-      if (username) {
-         getUser(username);
-         getAlphabet();
-         getModules();
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [username]);
-
-   if (isLoading) {
-      return (
-         <LayoutContainer>
-            <div className="flex items-center justify-center h-screen mt-[-50px]">
-               <div className="text-gray-500">Cargando perfil...</div>
-            </div>
-         </LayoutContainer>
-      );
-   }
-
-   if (notFound) {
-      return <Navigate to="/404" />;
-   }
 
    const progressAlphabetCount = userProfile?.alphabetProgress?.length || 0;
    const progressLessonCount = userProfile?.lessonProgress?.length || 0;
@@ -54,10 +31,37 @@ export const Profile = () => {
       0,
    );
 
+   const lessonPercentage =
+      totalLessons > 0 ? Math.round((progressLessonCount / totalLessons) * 100) : 0;
+
+   const alphabetPercentage =
+      totalAlphabet > 0 ? Math.round((progressAlphabetCount / totalAlphabet) * 100) : 0;
+
+   useEffect(() => {
+      if (username) {
+         getUser(username);
+         getAlphabet();
+         getModules();
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [username]);
+
+   if (notFound) {
+      return <Navigate to="/404" />;
+   }
+
+   if (isLoading) {
+      return (
+         <LayoutContainer className="flex-1 flex items-center justify-center">
+            <div className="text-gray-500">Cargando perfil...</div>
+         </LayoutContainer>
+      );
+   }
+
    return (
       <LayoutContainer className="flex-1 flex flex-col gap-4">
          {isMyProfile && (
-            <div className="">
+            <div>
                <h1 className="text-3xl font-bold">Mi perfil</h1>
                <p className="text-muted-foreground">Gestiona tu información personal</p>
             </div>
@@ -121,14 +125,16 @@ export const Profile = () => {
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-400/20 rounded-full h-4">
                      <div
-                        className={`${progressLessonCount === totalLessons ? "bg-green-500" : "bg-gradient-to-r from-blue-500 to-green-500"} h-4 rounded-full transition-all duration-500`}
-                        style={{
-                           width: `${(progressLessonCount / totalLessons) * 100}%`,
-                        }}
+                        className={`${
+                           lessonPercentage === 100
+                              ? "bg-green-500"
+                              : "bg-gradient-to-r from-blue-500 to-green-500"
+                        } h-4 rounded-full transition-all duration-500`}
+                        style={{ width: `${lessonPercentage}%` }}
                      ></div>
                   </div>
                   <p className="text-muted-foreground text-sm mt-[-10px]">
-                     {Math.round((progressLessonCount / totalLessons) * 100)}% completado
+                     {lessonPercentage}% completado
                   </p>
                </div>
             </div>
@@ -151,15 +157,16 @@ export const Profile = () => {
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-400/20 rounded-full h-4">
                      <div
-                        className={`${progressAlphabetCount === totalAlphabet ? "bg-green-500" : "bg-gradient-to-r from-purple-500 to-green-500"} h-4 rounded-full transition-all duration-500`}
-                        style={{
-                           width: `${(progressAlphabetCount / totalAlphabet) * 100}%`,
-                        }}
+                        className={`${
+                           alphabetPercentage === 100
+                              ? "bg-green-500"
+                              : "bg-gradient-to-r from-purple-500 to-green-500"
+                        } h-4 rounded-full transition-all duration-500`}
+                        style={{ width: `${alphabetPercentage}%` }}
                      ></div>
                   </div>
                   <p className="text-muted-foreground text-sm mt-[-10px]">
-                     {Math.round((progressAlphabetCount / totalAlphabet) * 100)}%
-                     completado
+                     {alphabetPercentage}% completado
                   </p>
                </div>
             </div>

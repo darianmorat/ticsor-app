@@ -80,7 +80,7 @@ export const Alphabet = () => {
                   return (
                      <div
                         key={letter.id}
-                        className={`rounded-md border p-4 text-center shadow-md ${
+                        className={`rounded-md border-4 p-4 text-center shadow-md ${
                            isPracticed
                               ? "border-green-500 dark:border-green-400/30 bg-green-50 dark:bg-green-900/15"
                               : "border-purple-400 dark:border-purple-400/30 bg-purple-50 dark:bg-purple-900/15"

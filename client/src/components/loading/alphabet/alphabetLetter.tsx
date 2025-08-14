@@ -11,8 +11,8 @@ export const SkeletonAlphabetLetter = () => {
          </div>
 
          <div className="flex flex-col gap-4 md:flex-row mt-1">
-            <div className="flex-6 bg-gray-100 dark:bg-gray-100/15 rounded-md p-2 flex justify-center items-center">
-               <Skeleton className="h-[330px] sm:h-[400px] md:h-[420px] rounded-md bg-background" />
+            <div className="flex-7 bg-gray-100 dark:bg-gray-100/15 rounded-md p-2 flex justify-center items-center">
+               <Skeleton className="w-full max-w-2xl h-[300px] sm:h-[400px] rounded-md bg-background" />
             </div>
 
             <div className="flex-3 flex flex-col gap-4 sm:flex-row md:flex-col">
