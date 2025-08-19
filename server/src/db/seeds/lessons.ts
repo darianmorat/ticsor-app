@@ -11,6 +11,7 @@ export const seedLessons = async () => {
    const data = [
       // MODULE #1
       {
+         moduleId: module(1),
          order: 1,
          title: "La liebre y la tortuga",
          type: "quiz",
@@ -95,6 +96,7 @@ export const seedLessons = async () => {
          ],
       },
       {
+         moduleId: module(1),
          order: 2,
          title: "El león y el ratón",
          type: "quiz",
@@ -183,6 +185,7 @@ export const seedLessons = async () => {
          ],
       },
       {
+         moduleId: module(1),
          order: 3,
          title: "El planeta del vanidoso",
          type: "quiz",
