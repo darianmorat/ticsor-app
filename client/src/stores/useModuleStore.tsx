@@ -2,11 +2,32 @@ import api from "@/api/axios";
 import { toast } from "react-toastify";
 import { create } from "zustand";
 
+type Question = {
+   id: number;
+   question: string;
+   options: [];
+   answer: number;
+};
+
+type Intro = {
+   text: string;
+   takeaway: string;
+   videoUrl?: string;
+};
+
+type Step = {
+   step: number;
+   type: "intro" | "quiz" | "minigame";
+   intro?: Intro;
+   question?: Question;
+};
+
 type Lesson = {
    id: string;
    order: number;
    title: string;
-   type: string;
+   type: "activity" | "quiz";
+   steps: Step[];
 };
 
 type CompletedLesson = {

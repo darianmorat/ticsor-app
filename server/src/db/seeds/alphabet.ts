@@ -7,7 +7,7 @@ export const seedAlphabet = async () => {
          order: 1,
          letter: "a",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937036/a_erqr5n.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -15,7 +15,7 @@ export const seedAlphabet = async () => {
          order: 2,
          letter: "b",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937036/b_gvjjta.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -23,7 +23,7 @@ export const seedAlphabet = async () => {
          order: 3,
          letter: "c",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -31,7 +31,7 @@ export const seedAlphabet = async () => {
          order: 4,
          letter: "d",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -39,7 +39,7 @@ export const seedAlphabet = async () => {
          order: 5,
          letter: "e",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -47,7 +47,7 @@ export const seedAlphabet = async () => {
          order: 6,
          letter: "f",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -55,7 +55,7 @@ export const seedAlphabet = async () => {
          order: 7,
          letter: "g",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -63,7 +63,7 @@ export const seedAlphabet = async () => {
          order: 8,
          letter: "h",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -71,7 +71,7 @@ export const seedAlphabet = async () => {
          order: 9,
          letter: "i",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -79,7 +79,7 @@ export const seedAlphabet = async () => {
          order: 10,
          letter: "j",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -87,7 +87,7 @@ export const seedAlphabet = async () => {
          order: 11,
          letter: "k",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -95,7 +95,7 @@ export const seedAlphabet = async () => {
          order: 12,
          letter: "l",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -103,7 +103,7 @@ export const seedAlphabet = async () => {
          order: 13,
          letter: "m",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -111,7 +111,7 @@ export const seedAlphabet = async () => {
          order: 14,
          letter: "n",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -119,7 +119,7 @@ export const seedAlphabet = async () => {
          order: 15,
          letter: "ñ",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -127,7 +127,7 @@ export const seedAlphabet = async () => {
          order: 16,
          letter: "o",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -135,7 +135,7 @@ export const seedAlphabet = async () => {
          order: 17,
          letter: "p",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -143,7 +143,7 @@ export const seedAlphabet = async () => {
          order: 18,
          letter: "q",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -151,7 +151,7 @@ export const seedAlphabet = async () => {
          order: 19,
          letter: "r",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -159,7 +159,7 @@ export const seedAlphabet = async () => {
          order: 20,
          letter: "s",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -167,7 +167,7 @@ export const seedAlphabet = async () => {
          order: 21,
          letter: "t",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -175,7 +175,7 @@ export const seedAlphabet = async () => {
          order: 22,
          letter: "u",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -183,7 +183,7 @@ export const seedAlphabet = async () => {
          order: 23,
          letter: "v",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -191,7 +191,7 @@ export const seedAlphabet = async () => {
          order: 24,
          letter: "w",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -199,7 +199,7 @@ export const seedAlphabet = async () => {
          order: 25,
          letter: "x",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -207,7 +207,7 @@ export const seedAlphabet = async () => {
          order: 26,
          letter: "y",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },
@@ -215,7 +215,7 @@ export const seedAlphabet = async () => {
          order: 27,
          letter: "z",
          videoUrl:
-            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754662353/amv_Zero_Two_720P_HD__1_k4rwrm.mp4",
+            "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1754937037/c_n8nnav.mp4",
          imageUrl:
             "https://www.dictionary.com/e/wp-content/uploads/2018/01/american_sign_language4.jpg",
       },

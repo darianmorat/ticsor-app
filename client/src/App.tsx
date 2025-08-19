@@ -50,8 +50,8 @@ function App() {
                      <Route path="/:username" element={<Profile />} />
                      <Route path="/alphabet" element={<Alphabet />} />
                      <Route path="/alphabet/:letter" element={<AlphabetLetter />} />
-                     <Route path="/module/:i" element={<Module />} />
-                     <Route path="/module/:i/lesson/:i" element={<ModuleLesson />} />
+                     <Route path="/module/:moduleOrder" element={<Module />} />
+                     <Route path="/module/:moduleOrder/lesson/:lessonOrder" element={<ModuleLesson />} />
                   </Route>
                </Route>
 
