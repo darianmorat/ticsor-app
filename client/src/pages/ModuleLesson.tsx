@@ -129,7 +129,12 @@ export const ModuleLesson = () => {
                <div className="space-y-4">
                   <h2 className="text-xl font-semibold">Introducción</h2>
                   <p className="text-lg">{currentStep.intro?.text}</p>
-                  <p className="text-lg font-medium">{currentStep.intro?.takeaway}</p>
+                  <div className="flex mb-8">
+                     <p className="text-lg font-medium">
+                        <span className="text-lg font-semibold">Moraleja:</span>{" "}
+                        {currentStep.intro?.takeaway}
+                     </p>
+                  </div>
                   {currentStep.intro?.videoUrl && (
                      <div className="flex-7 bg-gray-200 dark:bg-gray-200/30 rounded-md flex justify-center items-center p-2">
                         <video
@@ -169,20 +174,21 @@ export const ModuleLesson = () => {
                            </button>
                         ))}
                      </div>
-
-                     {selectedAnswer !== null && (
-                        <div className="mt-4">
-                           {selectedAnswer === question.answer ? (
-                              <p className="text-green-600 font-medium">¡Correcto! 🎉</p>
-                           ) : (
-                              <p className="text-red-600 font-medium">
-                                 Incorrecto. La respuesta correcta es:{" "}
-                                 {String.fromCharCode(65 + question.answer)}
-                              </p>
-                           )}
-                        </div>
-                     )}
                   </div>
+
+                  {selectedAnswer !== null && (
+                     <div className="mt-4 text-center mb-[-15px]">
+                        {selectedAnswer === question.answer ? (
+                           <p className="text-green-600 font-medium">
+                              ¡Correcto! Has elegido la respuesta adecuada.
+                           </p>
+                        ) : (
+                           <p className="text-red-600 font-medium">
+                              Incorrecto. Revisa de nuevo la pregunta.
+                           </p>
+                        )}
+                     </div>
+                  )}
                </div>
             );
          }
@@ -284,7 +290,11 @@ export const ModuleLesson = () => {
                      <Button
                         onClick={handleCompleteLesson}
                         className="flex-1 sm:max-w-50"
-                        disabled={currentStep.type === "quiz" && selectedAnswer === null}
+                        disabled={
+                           (currentStep.type === "quiz" && selectedAnswer === null) ||
+                           (currentStep.type === "quiz" &&
+                              selectedAnswer !== currentStep.question?.answer)
+                        }
                      >
                         Completar Lección
                      </Button>
@@ -293,7 +303,9 @@ export const ModuleLesson = () => {
                         onClick={() => handleStep(1)}
                         disabled={
                            stepIndex + 1 === totalSteps ||
-                           (currentStep.type === "quiz" && selectedAnswer === null)
+                           (currentStep.type === "quiz" && selectedAnswer === null) ||
+                           (currentStep.type === "quiz" &&
+                              selectedAnswer !== currentStep.question?.answer)
                         }
                         className="flex-1 sm:max-w-50"
                      >
