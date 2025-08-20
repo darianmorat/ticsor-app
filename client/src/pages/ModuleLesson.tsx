@@ -177,9 +177,11 @@ export const ModuleLesson = () => {
                            <button
                               key={index}
                               onClick={() => handleAnswerSelect(index)}
-                              className={`w-full p-3 text-left rounded-lg border-2 transition-colors ${
+                              className={`w-full p-3 text-left rounded-lg border-2  ${
                                  selectedAnswer === index
-                                    ? "border-blue-500 bg-blue-100"
+                                    ? selectedAnswer === question.answer
+                                       ? "border-green-500 bg-green-100 dark:bg-green-300/20"
+                                       : "border-red-400/80 bg-red-100 dark:bg-red-300/20"
                                     : "border-gray-200 hover:border-gray-300"
                               }`}
                            >
@@ -319,6 +321,14 @@ export const ModuleLesson = () => {
                            (currentStep.type === "quiz" && selectedAnswer === null) ||
                            (currentStep.type === "quiz" &&
                               selectedAnswer !== currentStep.question?.answer)
+                        }
+                        variant={
+                           stepIndex + 1 === totalSteps ||
+                           (currentStep.type === "quiz" && selectedAnswer === null) ||
+                           (currentStep.type === "quiz" &&
+                              selectedAnswer !== currentStep.question?.answer)
+                              ? "outline"
+                              : "default"
                         }
                         className="flex-1 sm:max-w-50"
                      >
