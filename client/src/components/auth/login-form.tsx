@@ -11,7 +11,7 @@ import {
 import z from "zod/v3";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { EyeIcon, EyeOffIcon, Lock, User } from "lucide-react";
+import { EyeIcon, EyeOffIcon, LoaderCircle, Lock, User } from "lucide-react";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { useAuthStore } from "@/stores/useAuthStore";
@@ -117,7 +117,8 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"form">)
                   />
                   <div className="flex flex-col gap-3">
                      <Button type="submit" className="w-full" disabled={isLoading}>
-                        {isLoading ? "Iniciando Sesión..." : "Inicio Sesión"}
+                        {isLoading && <LoaderCircle className="animate-spin" />}
+                        {isLoading ? "Iniciando sesión" : "Iniciar sesión"}
                      </Button>
                   </div>
                </div>
