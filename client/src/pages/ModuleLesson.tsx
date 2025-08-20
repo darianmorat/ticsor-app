@@ -86,19 +86,32 @@ export const ModuleLesson = () => {
       }
    };
 
+   // Here we handle the reload and lose progress if going back
+   const hasProgress = Object.keys(sessionAnswers).length > 0 || completedSteps.size > 0;
+
    useEffect(() => {
-      const hasProgress =
-         Object.keys(sessionAnswers).length > 0 || completedSteps.size > 0;
+      if (!hasProgress) return;
 
+      const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+         e.preventDefault();
+      };
+
+      window.addEventListener("beforeunload", handleBeforeUnload);
+      return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+   }, [hasProgress]);
+
+   const handleBack = () => {
       if (hasProgress) {
-         const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-            e.preventDefault();
-         };
+         const confirmLeave = window.confirm(
+            "Perderas tu progreso. ¿Seguro que quieres salir?",
+         );
 
-         window.addEventListener("beforeunload", handleBeforeUnload);
-         return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+         if (!confirmLeave) return;
+         navigate(-1);
+      } else {
+         navigate(-1);
       }
-   }, [sessionAnswers, completedSteps]);
+   };
 
    if (isLoading) {
       return (
@@ -224,7 +237,7 @@ export const ModuleLesson = () => {
    return (
       <LayoutContainer className="flex-1 flex flex-col gap-8">
          <button
-            onClick={() => navigate(-1)}
+            onClick={() => handleBack()}
             className="text-blue-600 hover:text-blue-600/80 font-medium flex items-center gap-2"
          >
             <ArrowLeft className="w-4 h-4" /> Regresar
