@@ -24,7 +24,7 @@ export const seedLessons = async () => {
                   takeaway:
                      "De poco vale el talento sin esfuerzo. Esta fábula de Esopo nos enseña que, con perseverancia y con esfuerzo, podemos lograr nuestras metas.",
                   videoUrl:
-                     "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1755619652/Media1_qwu2a5.mp4",
+                     "https://res.cloudinary.com/dijm4ylwb/video/upload/v1756226384/Media1_z04d63.mp4",
                },
             },
             {
@@ -109,7 +109,7 @@ export const seedLessons = async () => {
                   takeaway:
                      "Hasta los más grandes necesitan de los pequeños. Esta fábula de Esopo nos enseña a valorar a todos, sin importar su aspecto o las apariencias.",
                   videoUrl:
-                     "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1755622111/Media2_emlm7f.mp4",
+                     "https://res.cloudinary.com/dijm4ylwb/video/upload/v1756226384/Media1_z04d63.mp4",
                },
             },
             {
@@ -198,7 +198,7 @@ export const seedLessons = async () => {
                   takeaway:
                      "La vanidad solo busca admiración, pero no tiene verdadero valor.",
                   videoUrl:
-                     "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1755622364/Media3_vjgsve.mp4",
+                     "https://res.cloudinary.com/dijm4ylwb/video/upload/v1756226384/Media1_z04d63.mp4",
                },
             },
             {
@@ -329,7 +329,7 @@ export const seedLessons = async () => {
                   takeaway:
                      "De poco vale el talento sin esfuerzo. Esta fábula de Esopo nos enseña que, con perseverancia y con esfuerzo, podemos lograr nuestras metas.",
                   videoUrl:
-                     "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1755619652/Media1_qwu2a5.mp4",
+                     "https://res.cloudinary.com/dijm4ylwb/video/upload/v1756226384/Media1_z04d63.mp4",
                },
             },
             {
@@ -382,7 +382,7 @@ export const seedLessons = async () => {
                   takeaway:
                      "De poco vale el talento sin esfuerzo. Esta fábula de Esopo nos enseña que, con perseverancia y con esfuerzo, podemos lograr nuestras metas.",
                   videoUrl:
-                     "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1755619652/Media1_qwu2a5.mp4",
+                     "https://res.cloudinary.com/dijm4ylwb/video/upload/v1756226384/Media1_z04d63.mp4",
                },
             },
             {
@@ -435,7 +435,7 @@ export const seedLessons = async () => {
                   takeaway:
                      "De poco vale el talento sin esfuerzo. Esta fábula de Esopo nos enseña que, con perseverancia y con esfuerzo, podemos lograr nuestras metas.",
                   videoUrl:
-                     "https://res.cloudinary.com/dlnvhx1vm/video/upload/v1755619652/Media1_qwu2a5.mp4",
+                     "https://res.cloudinary.com/dijm4ylwb/video/upload/v1756226384/Media1_z04d63.mp4",
                },
             },
             {
