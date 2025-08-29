@@ -52,7 +52,9 @@ export const AlphabetLetter = () => {
       }
    }, [letterCompleted]);
 
-   const practiceAlphabetLetter = async (letterId: string) => {
+   const practiceAlphabetLetter = async (letterId?: string) => {
+      if (!letterId) return;
+
       const alreadyExists = userPracticedLetters.some((l) => l.letterId === letterId);
       if (alreadyExists) return;
 
