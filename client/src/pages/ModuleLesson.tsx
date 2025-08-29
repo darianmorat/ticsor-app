@@ -1,5 +1,7 @@
 import { LayoutContainer } from "@/components/layout/Container";
+import { SpellName } from "@/components/minigame/SpellName";
 import { Button } from "@/components/ui/button";
+import { useAlphabetStore } from "@/stores/useAlphabetStore";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useModuleStore } from "@/stores/useModuleStore";
 import { ArrowLeft } from "lucide-react";
@@ -19,6 +21,7 @@ export const ModuleLesson = () => {
       addCompletedLesson,
       getCompletedLessons,
    } = useModuleStore();
+   const { alphabet, getAlphabet } = useAlphabetStore();
    const { user } = useAuthStore();
    const { moduleOrder, lessonOrder } = useParams();
    const moduleIndex = Number(moduleOrder) - 1;
@@ -45,10 +48,16 @@ export const ModuleLesson = () => {
    useEffect(() => {
       getModules();
       getCompletedLessons();
+
+      getAlphabet();
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
    const navigate = useNavigate();
+
+   const scrollToTop = () => {
+      window.scrollTo(0, 0);
+   };
 
    const handleAnswerSelect = (answerIndex: number) => {
       setSessionAnswers((prev) => ({
@@ -141,12 +150,14 @@ export const ModuleLesson = () => {
             return (
                <div className="space-y-4">
                   <h2 className="text-xl font-semibold">Introducción</h2>
-                  <p className="text-lg">{currentStep.intro?.text}</p>
-                  <div className="flex mb-8">
-                     <p className="text-lg font-medium">
-                        <span className="text-lg font-semibold">Moraleja:</span>{" "}
-                        {currentStep.intro?.takeaway}
-                     </p>
+                  <div className="flex flex-col gap-4 mb-8">
+                     <p className="text-lg">{currentStep.intro?.text}</p>
+                     {currentStep.intro?.takeaway && (
+                        <p className="text-lg font-medium">
+                           <span className="text-lg font-semibold">Moraleja:</span>{" "}
+                           {currentStep.intro?.takeaway}
+                        </p>
+                     )}
                   </div>
                   {currentStep.intro?.videoUrl && (
                      <div className="flex-7 bg-gray-200 dark:bg-gray-200/30 rounded-md flex justify-center items-center p-2">
@@ -208,16 +219,79 @@ export const ModuleLesson = () => {
             );
          }
 
+         case "quiz_img": {
+            const question = currentStep.question;
+
+            if (!question) {
+               return <p>No hay pregunta disponible</p>;
+            }
+            return (
+               <div className="space-y-6">
+                  <div className="">
+                     <img
+                        src={question.question}
+                        className="w-60 mx-auto bg-accent shadow-md rounded-md mb-8 mt-[-20px]"
+                     />
+                     <div className="space-y-3">
+                        {question.options.map((option, index) => {
+                           const separatedLetters = option
+                              .split("")
+                              .map((char) =>
+                                 alphabet.find((item) => item.letter === char),
+                              )
+                              .filter(Boolean);
+
+                           return (
+                              <button
+                                 key={index}
+                                 onClick={() => handleAnswerSelect(index)}
+                                 className={`w-full p-3 text-left rounded-lg border-2  ${
+                                    selectedAnswer === index
+                                       ? selectedAnswer === question.answer
+                                          ? "border-green-500 bg-green-100 dark:bg-green-300/20"
+                                          : "border-red-400/80 bg-red-100 dark:bg-red-300/20"
+                                       : "border-gray-200 hover:border-gray-300"
+                                 }`}
+                              >
+                                 <div className="flex gap-2 items-center">
+                                    {String.fromCharCode(65 + index)}.{" "}
+                                    {separatedLetters.map((letter, idx) => (
+                                       <img
+                                          key={`${letter!.id}-${idx}`}
+                                          src={letter?.imageUrl}
+                                          className="w-20"
+                                       />
+                                    ))}
+                                 </div>
+                              </button>
+                           );
+                        })}
+                     </div>
+                  </div>
+
+                  {selectedAnswer !== null && (
+                     <div className="mt-4 text-center mb-[-15px]">
+                        {selectedAnswer === question.answer ? (
+                           <p className="text-green-600 font-medium">
+                              ¡Correcto! Has elegido la respuesta adecuada.
+                           </p>
+                        ) : (
+                           <p className="text-red-600 font-medium">
+                              Incorrecto. Revisa de nuevo la pregunta.
+                           </p>
+                        )}
+                     </div>
+                  )}
+               </div>
+            );
+         }
+
          case "minigame":
             return (
                <div className="space-y-4">
-                  <h2 className="text-xl font-semibold">Minijuego</h2>
-                  <div className="bg-yellow-50 p-8 rounded-lg text-center">
-                     <p className="text-lg">🎮 Aquí iría el minijuego</p>
-                     <p className="text-sm text-gray-600 mt-2">
-                        Componente de minijuego por implementar
-                     </p>
-                  </div>
+                  {currentStep.minigame === "spell_name" && <SpellName />}
+                  {/* {currentStep.minigame === "falling_letters" && <FallingLetters />} */}
+                  {/* {currentStep.minigame === "memorizing" && <Memorizing />} */}
                </div>
             );
 
@@ -246,7 +320,7 @@ export const ModuleLesson = () => {
          </button>
 
          <div className="flex flex-col gap-8">
-            <div className="">
+            <div className="border-b pb-4 mb-[-15px]">
                <h1 className="text-2xl font-bold">{currentLesson.title}</h1>
                <p className="text-gray-600">
                   Paso {stepIndex + 1} de {totalSteps}
@@ -274,7 +348,10 @@ export const ModuleLesson = () => {
 
                <div className="flex flex-row sm:flex-row gap-2 justify-center sm:justify-between">
                   <Button
-                     onClick={() => handleStep(0)}
+                     onClick={() => {
+                        handleStep(0);
+                        scrollToTop();
+                     }}
                      disabled={stepIndex <= 0}
                      variant="outline"
                      className="flex-1 sm:max-w-50"
@@ -315,7 +392,10 @@ export const ModuleLesson = () => {
                      </Button>
                   ) : (
                      <Button
-                        onClick={() => handleStep(1)}
+                        onClick={() => {
+                           handleStep(1);
+                           scrollToTop();
+                        }}
                         disabled={
                            stepIndex + 1 === totalSteps ||
                            (currentStep.type === "quiz" && selectedAnswer === null) ||

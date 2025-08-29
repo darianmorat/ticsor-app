@@ -51,7 +51,10 @@ function App() {
                      <Route path="/alphabet" element={<Alphabet />} />
                      <Route path="/alphabet/:letter" element={<AlphabetLetter />} />
                      <Route path="/module/:moduleOrder" element={<Module />} />
-                     <Route path="/module/:moduleOrder/lesson/:lessonOrder" element={<ModuleLesson />} />
+                     <Route
+                        path="/module/:moduleOrder/lesson/:lessonOrder"
+                        element={<ModuleLesson />}
+                     />
                   </Route>
                </Route>
 

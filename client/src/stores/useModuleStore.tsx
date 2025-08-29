@@ -5,7 +5,7 @@ import { create } from "zustand";
 type Question = {
    id: number;
    question: string;
-   options: [];
+   options: string[];
    answer: number;
 };
 
@@ -17,9 +17,10 @@ type Intro = {
 
 type Step = {
    step: number;
-   type: "intro" | "quiz" | "minigame";
+   type: "intro" | "quiz" | "quiz_img" | "minigame";
    intro?: Intro;
    question?: Question;
+   minigame?: string;
 };
 
 type Lesson = {

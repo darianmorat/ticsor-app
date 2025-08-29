@@ -7,6 +7,7 @@ type Letter = {
    order: number;
    letter: string;
    videoUrl: string;
+   imageUrl: string;
 };
 
 type CompletedLetter = {

@@ -11,6 +11,7 @@ import {
    Layers,
    Lock,
    Target,
+   TargetIcon,
 } from "lucide-react";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -30,12 +31,8 @@ type ModuleProps = {
 };
 
 export const Module = () => {
-   const {
-      modules,
-      completedLessons,
-      getModules,
-      getCompletedLessons,
-   } = useModuleStore();
+   const { modules, completedLessons, getModules, getCompletedLessons } =
+      useModuleStore();
    const { user } = useAuthStore();
    const navigate = useNavigate();
 
@@ -76,6 +73,8 @@ export const Module = () => {
             return <Target className={`w-5 h-5 text-orange-500 ${accesible}`} />;
          case "quiz":
             return <Book className={`w-5 h-5 text-blue-500 ${accesible}`} />;
+         case "minigame":
+            return <TargetIcon className={`w-5 h-5 text-blue-500 ${accesible}`} />;
          default:
             return <CircleAlert className={`w-5 h-5 text-gray-500 ${accesible}`} />;
       }
@@ -129,6 +128,7 @@ export const Module = () => {
                      (l) => l.lessonId === lesson.id,
                   );
 
+                  // const isAccessible = true;
                   const isAccessible =
                      index === 0 ||
                      userCompletedLessons.some(
@@ -169,7 +169,9 @@ export const Module = () => {
                                           ? "Actividad"
                                           : lesson.type === "quiz"
                                             ? "Quiz"
-                                            : "xxxxxx"}
+                                            : lesson.type === "minigame"
+                                              ? "Minigame"
+                                              : "xxxxxx"}
                                     </p>
                                  </div>
                               </div>
