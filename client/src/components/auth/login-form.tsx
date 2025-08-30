@@ -15,6 +15,7 @@ import { EyeIcon, EyeOffIcon, LoaderCircle, Lock, User } from "lucide-react";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { useAuthStore } from "@/stores/useAuthStore";
+import logo from "../../assets/logo.png";
 
 const formSchema = z.object({
    email: z.string().email({ message: "Email invalido" }),
@@ -50,7 +51,17 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"form">)
          >
             <div className="flex flex-col gap-6">
                <div className="flex flex-col items-center gap-2 text-center">
-                  <h1 className="text-2xl font-bold">Inicio de sesión</h1>
+                  <div className="flex justify-center items-center gap-2 md:justify-start">
+                     <img
+                        src={logo}
+                        className="h-7 size-9 dark:invert"
+                        alt="Ticsor Logo"
+                     />
+                     <span className="self-center font-bold whitespace-nowrap dark:text-white text-2xl">
+                        Ticsor App
+                     </span>
+                  </div>
+                  {/* <h1 className="text-2xl font-bold">Iniciar sesión</h1> */}
                   <p className="text-muted-foreground text-sm text-balance">
                      Ingresa tu correo y contraseña para continuar
                   </p>
@@ -123,7 +134,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"form">)
                   </div>
                </div>
             </div>
-            <div className="text-center text-sm text-muted-foreground mt-4">
+            <div className="text-center text-sm text-muted-foreground mt-2">
                © 2025 Ticsor App.
                <br /> Todos los derechos reservados.
             </div>
